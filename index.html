@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Starfield Effect</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="starfield"></canvas>
+
+    <script>
+    const canvas = document.getElementById('starfield');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+
+    const stars = [];
+    const emojis = ['🐶', '🐀', '🐐', '🦇', 'Melissa', '💖',];
+    const numStars = 100;
+
+    function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+
+        // Initialize or reset stars
+        for (let i = 0; i < numStars; i++) {
+            const randomVelocity = Math.random();
+            stars[i] = {
+                x: Math.random() * width,
+                y: Math.random() * height,
+                // Use the square of a random number for the velocity to bias towards smaller values
+                velocity: randomVelocity * randomVelocity * 3 + 1,
+                emoji: emojis[Math.floor(Math.random() * emojis.length)],
+                rotation: Math.random() * 2 * Math.PI, // Random initial rotation
+                rotationSpeed: Math.random() * 0.02 - 0.01 // Random rotation speed between -0.01 and 0.01
+            };
+        }
+    }
+
+    function draw() {
+        // Create a gradient that goes from black at the top to dark blue at the bottom
+        const gradient = ctx.createLinearGradient(0, 0, 0, height);
+        gradient.addColorStop(0, 'black');
+        gradient.addColorStop(1, 'darkblue');
+
+        // Fill the canvas with the gradient
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, width, height);
+
+        // Sort stars by velocity (size), so larger (closer) stars are drawn last (on top)
+        stars.sort((a, b) => a.velocity - b.velocity);
+
+        for (let i = 0; i < numStars; i++) {
+            const star = stars[i];
+
+            ctx.save(); // Save the current state of the context
+            ctx.translate(star.x, star.y); // Move to the star's position
+            ctx.rotate(star.rotation); // Rotate the context
+
+            ctx.font = `${star.velocity}em Arial`;
+            ctx.fillStyle = 'purple'; // Make sure the stars are white
+            ctx.fillText(star.emoji, 0, 0); // Draw the star at the origin, since we've translated the context
+
+            ctx.restore(); // Restore the context to its state before translation and rotation
+
+            // Update star's position and rotation
+            star.x += star.velocity;
+            star.rotation += star.rotationSpeed;
+            if (star.x > width) {
+                // Star moved off the right edge, reset it to the left
+                star.x = 0;
+                star.y = Math.random() * height;
+                star.velocity = Math.random() * 3 + 1;
+                star.emoji = emojis[Math.floor(Math.random() * emojis.length)];
+                star.rotation = Math.random() * 2 * Math.PI;
+                star.rotationSpeed = Math.random() * 0.02 - 0.01;
+            }
+        }
+    }
+
+    function animate() {
+        draw();
+        requestAnimationFrame(animate);
+    }
+
+    resizeCanvas();
+    animate();
+
+    window.addEventListener('resize', resizeCanvas);
+    </script>
+</body>
+</html>
