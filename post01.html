@@ -3,114 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Mode Template</title>
+    <title>Enhanced Blog Post Example - Glass Effect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Poppins:wght@600&family=Fira+Code&display=swap" rel="stylesheet">
     <style>
-/* Base styles */
-body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
-    color: #e0e0e0;
-    background-color: #121212;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background-color: #121212;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-.container {
-    max-width: 700px;
-    margin: 60px auto;
-    padding: 40px;
-    background-color: #1e1e1e;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
 
-/* Typography */
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    color: #ffffff;
-    margin-bottom: 20px;
-    line-height: 1.3;
-}
+        .container {
+            max-width: 700px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: rgba(30, 30, 30, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
 
-h1 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
-}
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 20px;
+            line-height: 1.3;
+        }
 
-h2 {
-    font-size: 2rem;
-    margin-top: 40px;
-}
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
 
-p {
-    margin-bottom: 24px;
-    font-size: 1.1rem;
-}
+        h2 {
+            font-size: 2rem;
+            margin-top: 40px;
+        }
 
-/* Links */
-a {
-    text-decoration: none;
-    color: #64ffda;
-    transition: color 0.3s ease;
-}
+        p {
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+        }
 
-a:hover {
-    color: #00bfa5;
-    text-decoration: underline;
-}
+        a {
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
 
-/* Quotes */
-blockquote {
-    border-left: 4px solid #64ffda;
-    padding-left: 20px;
-    margin-left: 0;
-    font-style: italic;
-    color: #bdbdbd;
-}
+        a:hover {
+            color: #9370db;
+            text-decoration: underline;
+        }
 
-/* List styling */
-ul, ol {
-    padding-left: 30px;
-    margin-bottom: 24px;
-}
+        blockquote {
+            border-left: 4px solid #7b68ee;
+            padding-left: 20px;
+            margin-left: 0;
+            font-style: italic;
+            color: #bdbdbd;
+        }
 
-li {
-    margin-bottom: 10px;
-}
+        ul, ol {
+            padding-left: 30px;
+            margin-bottom: 24px;
+        }
 
-/* Code blocks */
-pre, code {
-    background-color: #2a2a2a;
-    border-radius: 4px;
-    padding: 2px 5px;
-    font-family: 'Fira Code', monospace;
-    font-size: 0.9rem;
-}
+        li {
+            margin-bottom: 10px;
+        }
 
-pre {
-    padding: 15px;
-    overflow-x: auto;
-}
+        pre, code {
+            background-color: rgba(42, 42, 42, 0.7);
+            border-radius: 4px;
+            padding: 2px 5px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .container {
-        padding: 30px;
-        margin: 30px auto;
-    }
-    
-    h1 {
-        font-size: 2rem;
-    }
-    
-    h2 {
-        font-size: 1.75rem;
-    }
-}
+        pre {
+            padding: 15px;
+            overflow-x: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px;
+                margin: 30px auto;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
+            }
+        }
     </style>
 </head>
 <body>
+    <div class="background"></div>
     <div class="container">
 <h1 id="exploring-the-limits-a-journey-through-literature-s-most-provocative-authors">Exploring the Limits: A Journey Through Literature&#39;s Most Provocative Authors</h1>
 <p>&quot;Sex is the mysticism of materialism and the only possible religion in a materialistic society.&quot; – Malcolm Muggeridge</p>
@@ -207,5 +216,23 @@ pre {
 
 
     </div>
+
+    <script>
+        // Simple background texture using canvas
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = 256;
+        canvas.height = 256;
+
+        for (let x = 0; x < canvas.width; x += 4) {
+            for (let y = 0; y < canvas.height; y += 4) {
+                const value = Math.floor(Math.random() * 32) + 224;
+                ctx.fillStyle = `rgb(${value},${value},${value})`;
+                ctx.fillRect(x, y, 2, 2);
+            }
+        }
+
+        document.querySelector('.background').style.backgroundImage = `url(${canvas.toDataURL()})`;
+    </script>
 </body>
 </html>
