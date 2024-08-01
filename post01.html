@@ -5,37 +5,109 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dark Mode Template</title>
     <style>
-        body {
-            font-family: 'Merriweather', serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.5;
-            color: #fff;
-            background-color: #212121;
-        }
-        .container {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 400;
-            color: #fff;
-            margin-bottom: 10px;
-        }
-        p {
-            margin-bottom: 20px;
-        }
-        a {
-            text-decoration: none;
-            color: #66cccc; /* Purple accent */
-        }
-        a:hover {
-            text-decoration: underline;
-        }
+/* Base styles */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: #e0e0e0;
+    background-color: #121212;
+}
+
+.container {
+    max-width: 700px;
+    margin: 60px auto;
+    padding: 40px;
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 20px;
+    line-height: 1.3;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+h2 {
+    font-size: 2rem;
+    margin-top: 40px;
+}
+
+p {
+    margin-bottom: 24px;
+    font-size: 1.1rem;
+}
+
+/* Links */
+a {
+    text-decoration: none;
+    color: #64ffda;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #00bfa5;
+    text-decoration: underline;
+}
+
+/* Quotes */
+blockquote {
+    border-left: 4px solid #64ffda;
+    padding-left: 20px;
+    margin-left: 0;
+    font-style: italic;
+    color: #bdbdbd;
+}
+
+/* List styling */
+ul, ol {
+    padding-left: 30px;
+    margin-bottom: 24px;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+/* Code blocks */
+pre, code {
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    padding: 2px 5px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+}
+
+pre {
+    padding: 15px;
+    overflow-x: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 30px;
+        margin: 30px auto;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.75rem;
+    }
+}
     </style>
 </head>
 <body>
