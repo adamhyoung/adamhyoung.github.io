@@ -1,80 +1,536 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plugin Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #121212;
-            color: #E0E0E0;
-            padding: 20px;
+        .problematic {
+            background-color: #7f1d1d;
+            color: #fecaca;
         }
-        h1 {
-            color: #FFD700;
-            text-align: center;
-            margin-bottom: 40px;
+        .warning {
+            background-color: #92400e;
+            color: #fef3c7;
+        }
+        .full-width {
+            width: 100%;
+            overflow-x: auto;
         }
         table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 40px;
+            border-radius: 10px;
+            overflow: hidden;
         }
         th, td {
-            padding: 12px 15px;
-            text-align: left;
+            border-bottom: 1px solid #4b5563;
         }
-        thead th {
-            background-color: #3A3A3A;
-            color: #FFFFFF;
-            border-bottom: 2px solid #FFD700;
+        tr:last-child td {
+            border-bottom: none;
         }
-        tbody tr {
-            border-bottom: 1px solid #3A3A3A;
-        }
-        tbody tr:nth-child(even) {
-            background-color: #1E1E1E;
-        }
-        tbody tr:hover {
-            background-color: #2E2E2E;
-        }
-        tbody td {
-            color: #E0E0E0;
-        }
-        a {
-            color: #FFD700;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        .center-text {
-            text-align: center;
+        .container {
+            background-color: #1f2937;
+            border-radius: 12px;
+            padding: 20px;
         }
     </style>
 </head>
-<body>
-    <h1>WordPress Plugin Report</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Plugin URL</th>
-                <th>Author</th>
-                <th>Author URL</th>
-                <th>Repository</th>
-                <th>Activated</th>
-                <th>Installed Version</th>
-                <th>Auto-update</th>
-                <th>Last Update</th>
-                <th>Tested up to WP Version</th>
-                <th>Rating</th>
-            </tr>
-        </thead>
-        <tbody>
-'\n    <tr>\n        <td>All-in-One WP Migration</td>\n        <td><a href="https://servmask.com/">https://servmask.com/</a></td>\n        <td>ServMask</td>\n        <td><a href="https://servmask.com/">https://servmask.com/</a></td>\n        <td>wordpress.org</td>\n        <td class="center-text">Yes</td>\n        <td>7.78 (7.86 available)</td>\n        <td class="center-text">Not enabled</td>\n        <td>3 weeks</td>\n        <td>6.6.1</td>\n        <td class="center-text">90%</td>\n    </tr>\n    \n    <tr>\n        <td>All-in-One WP Migration S3 Extension</td>\n        <td><a href="https://servmask.com/">https://servmask.com/</a></td>\n        <td>ServMask</td>\n        <td><a href="https://servmask.com/">https://servmask.com/</a></td>\n        <td>wordpress.org</td>\n        <td class="center-text">Yes</td>\n        <td>3.78 (3.85 available)</td>\n        <td class="center-text">Not enabled</td>\n        <td>No data available</td>\n        <td>No data available</td>\n        <td class="center-text">99%</td>'
-        </tbody>
-    </table>
+<body class="bg-gray-900 text-gray-200">
+    <div class="container mx-auto py-8">
+        <h1 class="text-center text-3xl mb-8 text-gray-100">Plugin Report</h1>
+        <div class="full-width">
+            <table class="min-w-full bg-gray-800 rounded-lg">
+                <thead>
+                    <tr>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Name</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Plugin URL</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Author</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Repository</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Activated</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Installed Version</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Auto-update</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Last Update</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Tested up to WP Version</th>
+                        <th class="py-3 px-5 bg-gray-700 text-left text-gray-400">Rating</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+    <tr>
+        <td class="py-3 px-5">All-in-One WP Migration</td>
+        <td class="py-3 px-5"><a href="https://servmask.com/" target="_blank" class="text-blue-400 hover:underline">https://servmask.com/</a></td>
+        <td class="py-3 px-5"><a href="https://servmask.com/" target="_blank" class="text-blue-400 hover:underline">ServMask</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">7.78 (7.86 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">3 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">90%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">All-in-One WP Migration S3 Extension</td>
+        <td class="py-3 px-5"><a href="https://servmask.com/" target="_blank" class="text-blue-400 hover:underline">https://servmask.com/</a></td>
+        <td class="py-3 px-5"><a href="https://servmask.com/" target="_blank" class="text-blue-400 hover:underline">ServMask</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">3.78 (3.85 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">99%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">All-in-One WP Migration Unlimited Extension</td>
+        <td class="py-3 px-5"><a href="https://servmask.com/" target="_blank" class="text-blue-400 hover:underline">https://servmask.com/</a></td>
+        <td class="py-3 px-5"><a href="https://servmask.com/" target="_blank" class="text-blue-400 hover:underline">ServMask</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">2.53 (2.59 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">99%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Autoptimize</td>
+        <td class="py-3 px-5"><a href="https://autoptimize.com/pro/" target="_blank" class="text-blue-400 hover:underline">https://autoptimize.com/pro/</a></td>
+        <td class="py-3 px-5"><a href="https://autoptimize.com/pro/" target="_blank" class="text-blue-400 hover:underline">Frank Goossens (futtta)</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">3.1.8.1 (3.1.12 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">1 month</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">94%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Better Search Replace Pro</td>
+        <td class="py-3 px-5"><a href="https://bettersearchreplace.com" target="_blank" class="text-blue-400 hover:underline">https://bettersearchreplace.com</a></td>
+        <td class="py-3 px-5"><a href="https://bettersearchreplace.com" target="_blank" class="text-blue-400 hover:underline">Delicious Brains</a></td>
+        <td class="py-3 px-5 ">bettersearchreplace.com</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">1.4.3</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Classic Editor</td>
+        <td class="py-3 px-5"><a href="https://en-ca.wordpress.org/plugins/classic-editor/" target="_blank" class="text-blue-400 hover:underline">https://en-ca.wordpress.org/plugins/classic-editor/</a></td>
+        <td class="py-3 px-5"><a href="https://github.com/WordPress/classic-editor/" target="_blank" class="text-blue-400 hover:underline">WordPress Contributors</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">1.6.3 (1.6.4 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">1 month</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">98%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Duplicate Page</td>
+        <td class="py-3 px-5"><a href="https://en-ca.wordpress.org/plugins/duplicate-page/" target="_blank" class="text-blue-400 hover:underline">https://en-ca.wordpress.org/plugins/duplicate-page/</a></td>
+        <td class="py-3 px-5"><a href="https://profiles.wordpress.org/mndpsingh287/" target="_blank" class="text-blue-400 hover:underline">mndpsingh287</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">4.5.2 (4.5.4 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">1 month</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">96%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Easy Table of Contents</td>
+        <td class="py-3 px-5"><a href="https://tocwp.com/" target="_blank" class="text-blue-400 hover:underline">https://tocwp.com/</a></td>
+        <td class="py-3 px-5"><a href="https://tocwp.com/" target="_blank" class="text-blue-400 hover:underline">Magazine3</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">2.0.66.1 (2.0.69 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">5 days</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 warning">88%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Enable Media Replace</td>
+        <td class="py-3 px-5"><a href="https://en-ca.wordpress.org/plugins/enable-media-replace/" target="_blank" class="text-blue-400 hover:underline">https://en-ca.wordpress.org/plugins/enable-media-replace/</a></td>
+        <td class="py-3 px-5"><a href="https://shortpixel.com" target="_blank" class="text-blue-400 hover:underline">ShortPixel</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">4.1.2 (4.1.5 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">1 month</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 warning">88%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Gravity Forms</td>
+        <td class="py-3 px-5"><a href="https://gravityforms.com" target="_blank" class="text-blue-400 hover:underline">https://gravityforms.com</a></td>
+        <td class="py-3 px-5"><a href="https://gravityforms.com" target="_blank" class="text-blue-400 hover:underline">Gravity Forms</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">2.6.8 (2.8.17 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 problematic">10.0</td>
+        <td class="py-3 px-5 ">No data available</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Gravity Forms Event Tracking</td>
+        <td class="py-3 px-5"><a href="https://wordpress.org/plugins/gravity-forms-google-analytics-event-tracking/" target="_blank" class="text-blue-400 hover:underline">https://wordpress.org/plugins/gravity-forms-google-analytics-event-tracking/</a></td>
+        <td class="py-3 px-5"><a href="https://mediaron.com" target="_blank" class="text-blue-400 hover:underline">Ronald Huereca</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">2.4.14</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">3 months</td>
+        <td class="py-3 px-5 problematic">6.5.5</td>
+        <td class="py-3 px-5 ">100%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Grow Social by Mediavine</td>
+        <td class="py-3 px-5"><a href="https://marketplace.mediavine.com/grow-social-pro/" target="_blank" class="text-blue-400 hover:underline">https://marketplace.mediavine.com/grow-social-pro/</a></td>
+        <td class="py-3 px-5"><a href="https://marketplace.mediavine.com/grow-social-pro/" target="_blank" class="text-blue-400 hover:underline">Mediavine</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">1.20.3 (1.34.3 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">2 months</td>
+        <td class="py-3 px-5 problematic">6.5.5</td>
+        <td class="py-3 px-5 ">94%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Image Alt Text</td>
+        <td class="py-3 px-5"><a href="https://rswebstudios.com/" target="_blank" class="text-blue-400 hover:underline">https://rswebstudios.com/</a></td>
+        <td class="py-3 px-5"><a href="https://rswebstudios.com" target="_blank" class="text-blue-400 hover:underline">RS WebStudios</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">2.0.0</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">2 months</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">98%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Juicer</td>
+        <td class="py-3 px-5"><a href="https://wp.juicer.io" target="_blank" class="text-blue-400 hover:underline">https://wp.juicer.io</a></td>
+        <td class="py-3 px-5"><a href="https://saas.group" target="_blank" class="text-blue-400 hover:underline">saas.group LLC</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">1.12.3 (1.12.12 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">2 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 warning">84%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Jupiter Core</td>
+        <td class="py-3 px-5"><a href="https://artbees.net" target="_blank" class="text-blue-400 hover:underline">https://artbees.net</a></td>
+        <td class="py-3 px-5"><a href="https://artbees.net" target="_blank" class="text-blue-400 hover:underline">Artbees</a></td>
+        <td class="py-3 px-5 warning">wordpress.org. plugin not found</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">1.0.3</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Jupiter Donut</td>
+        <td class="py-3 px-5"><a href="https://artbees.net" target="_blank" class="text-blue-400 hover:underline">https://artbees.net</a></td>
+        <td class="py-3 px-5"><a href="https://artbees.net" target="_blank" class="text-blue-400 hover:underline">Artbees</a></td>
+        <td class="py-3 px-5 warning">wordpress.org. plugin not found</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">1.2.0</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Plugin Report</td>
+        <td class="py-3 px-5"><a href="https://roytanck.com/" target="_blank" class="text-blue-400 hover:underline">https://roytanck.com/</a></td>
+        <td class="py-3 px-5"><a href="https://roytanck.com" target="_blank" class="text-blue-400 hover:underline">Roy Tanck</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">2.1.1</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">2 months</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">100%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Popup Maker</td>
+        <td class="py-3 px-5"><a href="https://wppopupmaker.com/" target="_blank" class="text-blue-400 hover:underline">https://wppopupmaker.com/</a></td>
+        <td class="py-3 px-5"><a href="https://wppopupmaker.com/" target="_blank" class="text-blue-400 hover:underline">Popup Maker</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">1.18.2 (1.19.2 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">1 week</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">98%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Redirection</td>
+        <td class="py-3 px-5"><a href="https://redirection.me/" target="_blank" class="text-blue-400 hover:underline">https://redirection.me/</a></td>
+        <td class="py-3 px-5"><a href="nan" target="_blank" class="text-blue-400 hover:underline">John Godley</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">5.4.2 (5.5.0 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">3 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 warning">88%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Regenerate Thumbnails</td>
+        <td class="py-3 px-5"><a href="https://alex.blog/wordpress-plugins/regenerate-thumbnails/" target="_blank" class="text-blue-400 hover:underline">https://alex.blog/wordpress-plugins/regenerate-thumbnails/</a></td>
+        <td class="py-3 px-5"><a href="https://alex.blog/" target="_blank" class="text-blue-400 hover:underline">Alex Mills (Viper007Bond)</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">3.1.6</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 problematic">1 year</td>
+        <td class="py-3 px-5 problematic">6.3.5</td>
+        <td class="py-3 px-5 ">92%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">SEOPress</td>
+        <td class="py-3 px-5"><a href="https://www.seopress.org/" target="_blank" class="text-blue-400 hover:underline">https://www.seopress.org/</a></td>
+        <td class="py-3 px-5"><a href="https://www.seopress.org/" target="_blank" class="text-blue-400 hover:underline">The SEO Guys at SEOPress</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">7.9.1 (8.0.1 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">1 month</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">96%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">SEOPress PRO</td>
+        <td class="py-3 px-5"><a href="https://www.seopress.org/seopress-pro/" target="_blank" class="text-blue-400 hover:underline">https://www.seopress.org/seopress-pro/</a></td>
+        <td class="py-3 px-5"><a href="https://www.seopress.org/seopress-pro/" target="_blank" class="text-blue-400 hover:underline">The SEO Guys at SEOPress</a></td>
+        <td class="py-3 px-5 warning">wordpress.org. plugin not found</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">6.9</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Show modified Date in admin lists</td>
+        <td class="py-3 px-5"><a href="https://apasionados.es" target="_blank" class="text-blue-400 hover:underline">https://apasionados.es</a></td>
+        <td class="py-3 px-5"><a href="https://apasionados.es" target="_blank" class="text-blue-400 hover:underline">Apasionados.es</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">1.4</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 problematic">12 months</td>
+        <td class="py-3 px-5 problematic">6.3.5</td>
+        <td class="py-3 px-5 ">98%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Side Menu Lite</td>
+        <td class="py-3 px-5"><a href="https://wordpress.org/plugins/side-menu-lite/" target="_blank" class="text-blue-400 hover:underline">https://wordpress.org/plugins/side-menu-lite/</a></td>
+        <td class="py-3 px-5"><a href="https://wow-estore.com/" target="_blank" class="text-blue-400 hover:underline">Wow-Company</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">4.1 (5.1 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">2 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 warning">76%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Simple Custom Post Order</td>
+        <td class="py-3 px-5"><a href="https://wordpress.org/plugins-wp/simple-custom-post-order/" target="_blank" class="text-blue-400 hover:underline">https://wordpress.org/plugins-wp/simple-custom-post-order/</a></td>
+        <td class="py-3 px-5"><a href="https://colorlib.com/" target="_blank" class="text-blue-400 hover:underline">Colorlib</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">2.5.6 (2.5.7 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">5 months</td>
+        <td class="py-3 px-5 problematic">6.5.5</td>
+        <td class="py-3 px-5 ">96%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Slide Anything - Responsive Content / HTML Slider and Carousel</td>
+        <td class="py-3 px-5"><a href="https://wordpress.org/plugins/slide-anything/" target="_blank" class="text-blue-400 hover:underline">https://wordpress.org/plugins/slide-anything/</a></td>
+        <td class="py-3 px-5"><a href="nan" target="_blank" class="text-blue-400 hover:underline">nan</a></td>
+        <td class="py-3 px-5 problematic">wordpress.org. plugin closed</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">2.4.9</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Speed Optimizer</td>
+        <td class="py-3 px-5"><a href="https://siteground.com" target="_blank" class="text-blue-400 hover:underline">https://siteground.com</a></td>
+        <td class="py-3 px-5"><a href="https://www.siteground.com" target="_blank" class="text-blue-400 hover:underline">SiteGround</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">7.6.3 (7.6.4 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">3 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 warning">84%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Surfer</td>
+        <td class="py-3 px-5"><a href="nan" target="_blank" class="text-blue-400 hover:underline">nan</a></td>
+        <td class="py-3 px-5"><a href="https://surferseo.com" target="_blank" class="text-blue-400 hover:underline">Surfer</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">1.2.2.298 (1.5.0.502 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">1 month</td>
+        <td class="py-3 px-5 problematic">6.6.0</td>
+        <td class="py-3 px-5 ">94%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Wordfence Security</td>
+        <td class="py-3 px-5"><a href="http://www.wordfence.com/" target="_blank" class="text-blue-400 hover:underline">http://www.wordfence.com/</a></td>
+        <td class="py-3 px-5"><a href="http://www.wordfence.com/" target="_blank" class="text-blue-400 hover:underline">Wordfence</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">7.10.3 (7.11.7 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">1 month</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">94%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">WP File Manager</td>
+        <td class="py-3 px-5"><a href="https://wordpress.org/plugins/wp-file-manager" target="_blank" class="text-blue-400 hover:underline">https://wordpress.org/plugins/wp-file-manager</a></td>
+        <td class="py-3 px-5"><a href="https://profiles.wordpress.org/mndpsingh287" target="_blank" class="text-blue-400 hover:underline">mndpsingh287</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">7.2 (8.0 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">4 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">92%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">WP Last Modified</td>
+        <td class="py-3 px-5"><a href="www.dogan-ucar.de/wp-open-last-modified" target="_blank" class="text-blue-400 hover:underline">www.dogan-ucar.de/wp-open-last-modified</a></td>
+        <td class="py-3 px-5"><a href="www.dogan-ucar.de" target="_blank" class="text-blue-400 hover:underline">Dogan Ucar</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">1.4.6</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 problematic">5 years</td>
+        <td class="py-3 px-5 problematic">5.3.18</td>
+        <td class="py-3 px-5 ">100%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">WP Mail SMTP</td>
+        <td class="py-3 px-5"><a href="https://wpmailsmtp.com/" target="_blank" class="text-blue-400 hover:underline">https://wpmailsmtp.com/</a></td>
+        <td class="py-3 px-5"><a href="https://wpmailsmtp.com/" target="_blank" class="text-blue-400 hover:underline">WP Mail SMTP</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">3.8.2 (4.1.1 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">3 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">96%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">WPBakery Page Builder (Modified Version)</td>
+        <td class="py-3 px-5"><a href="http://wpbakery.com" target="_blank" class="text-blue-400 hover:underline">http://wpbakery.com</a></td>
+        <td class="py-3 px-5"><a href="http://wpbakery.com" target="_blank" class="text-blue-400 hover:underline">Michael M - WPBakery.com</a></td>
+        <td class="py-3 px-5 warning">wordpress.org. plugin not found</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">6.5.0</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+        <td class="py-3 px-5 ">No data available</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">WPCode Lite</td>
+        <td class="py-3 px-5"><a href="https://www.wpcode.com/" target="_blank" class="text-blue-400 hover:underline">https://www.wpcode.com/</a></td>
+        <td class="py-3 px-5"><a href="https://www.wpcode.com/" target="_blank" class="text-blue-400 hover:underline">WPCode</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 warning">2.1.3.1 (2.2.1 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">3 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">98%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">WPScan</td>
+        <td class="py-3 px-5"><a href="http://wordpress.org/plugins/wpscan/" target="_blank" class="text-blue-400 hover:underline">http://wordpress.org/plugins/wpscan/</a></td>
+        <td class="py-3 px-5"><a href="https://wpscan.com/" target="_blank" class="text-blue-400 hover:underline">WPScan Team</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">Yes</td>
+        <td class="py-3 px-5 ">1.16</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">3 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 warning">76%</td>
+    </tr>
+    
+    <tr>
+        <td class="py-3 px-5">Yoast SEO</td>
+        <td class="py-3 px-5"><a href="https://yoa.st/1uj" target="_blank" class="text-blue-400 hover:underline">https://yoa.st/1uj</a></td>
+        <td class="py-3 px-5"><a href="https://yoa.st/1uk" target="_blank" class="text-blue-400 hover:underline">Team Yoast</a></td>
+        <td class="py-3 px-5 ">wordpress.org</td>
+        <td class="py-3 px-5">No</td>
+        <td class="py-3 px-5 warning">21.7 (23.3 available)</td>
+        <td class="py-3 px-5">Not enabled</td>
+        <td class="py-3 px-5 ">2 weeks</td>
+        <td class="py-3 px-5 ">6.6.1</td>
+        <td class="py-3 px-5 ">96%</td>
+    </tr>
+    
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center text-gray-400 text-sm mt-8">
+            Report generated on 2024-09-02
+        </div>
+    </div>
 </body>
 </html>
