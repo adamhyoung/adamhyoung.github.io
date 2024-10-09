@@ -170,7 +170,7 @@ function postProcess() {
 function init() {
   container = document.getElementById('container');
 
-  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 4000);
   camera.position.set(0, 400, 800);
 
   scene = new THREE.Scene();
@@ -226,11 +226,14 @@ function init() {
 }
 
 function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  composer.setSize(window.innerWidth, window.innerHeight);
-}
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+         camera.aspect = window.innerWidth / window.innerHeight;
+         camera.updateProjectionMatrix();
+         renderer.setSize(window.innerWidth, window.innerHeight);
+         composer.setSize(window.innerWidth, window.innerHeight);
+      }, 200);
+   }
       
 function animate() {
   requestAnimationFrame(animate);
@@ -259,8 +262,8 @@ function animate() {
   group.scale.set(scaleVar, scaleVar, scaleVar);
 
   group.children.forEach(mesh => {
-    mesh.rotation.x += 0.01;
-    mesh.rotation.z += 0.02;
+    mesh.rotation.x += 0.005;
+    mesh.rotation.z += 0.01;
   });
         
   controls.update();
@@ -274,7 +277,7 @@ let t0 = 0;
 const explode = () => {
   t0 = Date.now();
   
-  const smokeTexture = new THREE.TextureLoader().load('https://i.imgur.com/3gQW5z1.png');
+  const smokeTexture = new THREE.TextureLoader().load('https://i.imgur.com/tCSuz6y.gif');
   const smokeMaterial = new THREE.MeshLambertMaterial({
     color: 0x222222, 
     map: smokeTexture, 
