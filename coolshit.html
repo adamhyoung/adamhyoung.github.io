@@ -1,0 +1,343 @@
+<html><head>
+<script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module-shims.js"></script>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.150.1/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.150.1/examples/jsm/"
+    }
+  }
+</script>
+<script type="module">
+
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+let container, camera, scene, renderer, controls, composer;
+let shapes, group, microGroup, particles;
+
+const params = {
+  amount: 50,
+  bevelEnabled: false,
+  bevelThickness: 2,
+  bevelSize: 1,
+  bevelOffset: 0,
+  bevelSegments: 3
+};
+
+const clock = new THREE.Clock();
+      
+const random = (a, b) => a + (b - a) * Math.random();
+const randomInt = (a, b) => Math.floor(random(a, b + 1));
+
+let storm;
+
+function setupStorm() {
+  const color = 0x080808;
+  scene.background = new THREE.Color(color);
+  scene.fog = new THREE.FogExp2(color, 0.003);
+  
+  const pointLight = new THREE.PointLight(0x5555ff, 1, 0, 2);
+  pointLight.position.set(0, 300, 0);
+  scene.add(pointLight);
+  
+  setInterval(() => {
+    pointLight.power = random(10000000, 30000000);
+    pointLight.decay = 2;
+    
+    scene.background.r = random(0, 0.1);
+    scene.background.b = random(0, 0.1);
+    scene.background.g = random(0, 0.05);
+
+    pointLight.color.r = random(0.5, 0.9);
+    pointLight.color.g = random(0.2, 0.6);     
+    pointLight.color.b = random(0.8, 1.0);
+    
+    const flash = () => {
+      const duration = random(50, 500);
+      scene.background.r = random(0.2, 0.5);
+      scene.background.g = random(0.3, 0.7);
+      scene.background.b = random(0.4, 0.8);
+      setTimeout(() => {
+        scene.background.r = 0.03;
+        scene.background.g = 0.03;
+        scene.background.b = 0.03;
+      }, duration);  
+    };
+    if (Math.random() < 0.2) {
+      flash();
+      setTimeout(flash, random(50, 300));
+    }
+    
+  }, random(100, 2000));
+}
+
+function createShapes() {
+  shapes = [];
+  
+  const makeRandomShape = () => {
+    const shape = new THREE.Shape();  
+    
+    shape.moveTo(random(-200,200), random(-100,100));
+    let cp = new THREE.Vector2();
+    for (let i=0; i<randomInt(3,6); i++) {
+      cp.set(random(-300,300), random(-150,150));
+      shape.quadraticCurveTo(cp.x, cp.y, cp.x, cp.y);
+    }
+    shape.closePath();
+    return shape;
+  };
+
+  for (let i=0; i<params.amount; i++) {
+    const shape = makeRandomShape();
+    shapes.push(shape);
+  }
+}
+
+function createParticles() {
+  const geometry = new THREE.BufferGeometry();
+  const count = 5000;
+  const positions = new Float32Array(count * 3);
+  
+  for (let i=0; i<count; i++) {
+    const i3 = i * 3;
+    positions[i3] = random(-1000, 1000);
+    positions[i3+1] = random(-800, 800);
+    positions[i3+2] = random(-800, 800); 
+  }
+  
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  
+  const material = new THREE.PointsMaterial({
+    size: 4,
+    color: 0x101010,
+    blending: THREE.AdditiveBlending, 
+    transparent: true,
+    opacity: 0.8,
+    depthWrite: false
+  });
+  
+  particles = new THREE.Points(geometry, material);
+  scene.add(particles);
+}
+
+function loadMicroEngagements() {
+  const loader = new GLTFLoader();
+  const modelPaths = [
+    'path/to/model1.glb',
+    'path/to/model2.glb',
+    'path/to/model3.glb'
+    // add more model paths
+  ];
+
+  microGroup = new THREE.Group();
+  scene.add(microGroup);
+
+  modelPaths.forEach(path => {
+    loader.load(path, gltf => {
+      const model = gltf.scene;
+      model.traverse(child => {
+        if (child.isMesh) {
+          child.material = new THREE.MeshStandardMaterial({
+            color: new THREE.Color(`hsl(${random(200,250)},70%,50%)`),
+            emissive: new THREE.Color(`hsl(${random(200,250)},70%,50%)`),
+            emissiveIntensity: 2
+          });
+        }
+      });
+      model.scale.set(5, 5, 5);
+      model.position.set(random(-500, 500), random(-300, 300), random(-300, 300));
+      microGroup.add(model);
+    });
+  });
+}
+
+function postProcess() {
+  composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+  
+  const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+  bloomPass.threshold = random(0,1);
+  bloomPass.strength = random(1,2);
+  bloomPass.radius = random(0,1);
+  composer.addPass(bloomPass);
+}
+
+function init() {
+  container = document.getElementById('container');
+
+  camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+  camera.position.set(0, 400, 800);
+
+  scene = new THREE.Scene();
+  
+  setupStorm();
+  createShapes();
+  loadMicroEngagements();
+  createParticles();
+        
+  group = new THREE.Group();        
+  scene.add(group);
+        
+  for (const shape of shapes) {
+    const extrudeSettings = {
+      steps: 2,  
+      depth: random(20,60),
+      bevelEnabled: params.bevelEnabled,
+      bevelThickness: params.bevelThickness,
+      bevelSize: params.bevelSize,
+      bevelOffset: params.bevelOffset,
+      bevelSegments: params.bevelSegments
+    };
+
+    const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
+
+    const material = new THREE.MeshStandardMaterial({ 
+      color: new THREE.Color(`hsl(${random(200,250)},90%,30%)`),
+      roughness: 0.75,
+      metalness: 0.5,
+      flatShading: true
+    });
+    
+    const mesh = new THREE.Mesh(geom, material);
+    mesh.rotation.set(
+      random(0, Math.PI),
+      random(0, Math.PI),
+      random(0, Math.PI)
+    );
+    group.add(mesh);    
+  }
+  
+  renderer = new THREE.WebGLRenderer({antialias:true});
+  renderer.setPixelRatio(window.devicePixelRatio);
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  container.appendChild(renderer.domElement);
+  
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+
+  postProcess();
+  
+  window.addEventListener('resize', onWindowResize);
+}
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight);
+}
+      
+function animate() {
+  requestAnimationFrame(animate);
+  
+  const elapsed = clock.getElapsedTime();
+        
+  particles.rotation.y = elapsed * 0.05;
+        
+  for (let i=0; i<particles.geometry.attributes.position.count; i++) {
+    const i3 = i * 3;
+        
+    particles.geometry.attributes.position.array[i3+1] += Math.sin(elapsed * 0.001 + Math.random()) * 0.1;
+  }
+  particles.geometry.attributes.position.needsUpdate = true;
+
+  microGroup.children.forEach(model => {
+    model.rotation.y += 0.01;
+    model.rotation.x += 0.005;
+  });
+  
+  // Animate central group state variances
+  group.rotation.y = Math.sin(elapsed * 0.2) * 0.2;
+  group.rotation.z = Math.cos(elapsed * 0.1) * 0.1;
+  
+  const scaleVar = (Math.sin(elapsed * 0.3) + 1) * 0.1 + 1; 
+  group.scale.set(scaleVar, scaleVar, scaleVar);
+
+  group.children.forEach(mesh => {
+    mesh.rotation.x += 0.01;
+    mesh.rotation.z += 0.02;
+  });
+        
+  controls.update();
+  composer.render();
+}
+      
+init();
+animate();
+
+let t0 = 0;
+const explode = () => {
+  t0 = Date.now();
+  
+  const smokeTexture = new THREE.TextureLoader().load('https://i.imgur.com/3gQW5z1.png');
+  const smokeMaterial = new THREE.MeshLambertMaterial({
+    color: 0x222222, 
+    map: smokeTexture, 
+    transparent: true,
+    opacity: 0.4
+  });
+
+  for (const mesh of group.children) {
+    const destVector = new THREE.Vector3(
+      random(-400, 400), 
+      random(-300, 300),
+      random(-200, 200) 
+    );
+    const t = mesh.position.clone();
+    
+    new TWEEN.Tween(mesh.position)
+      .to(destVector, random(1500, 2500))
+      .easing(TWEEN.Easing.Exponential.Out)
+      .start();
+      
+    const smokeMesh = new THREE.Mesh(mesh.geometry, smokeMaterial);
+    mesh.add(smokeMesh);
+    smokeMesh.visible = false;
+    smokeMesh.scale.multiplyScalar(1.3);
+    
+    smokeMesh.visible = true; 
+    smokeMesh.material.opacity = 0.6;
+    new TWEEN.Tween(smokeMesh.material)
+      .to({opacity: 0}, 2000)
+      .onComplete(() => smokeMesh.visible = false)
+      .start();
+  }  
+};
+
+const regroup = () => {
+  for (const mesh of group.children) {
+    new TWEEN.Tween(mesh.position)
+      .to({ x: 0, y: 0, z: 0 }, random(1500, 2500))
+      .easing(TWEEN.Easing.Exponential.In)
+      .start();
+  }  
+};
+  
+document.addEventListener('keypress', e => {
+  // spacebar
+  if (e.keyCode === 32) {
+    const t = (Date.now() - t0) / 1000;
+    if (t > 5) {
+      explode();   
+    }
+  }
+});
+document.querySelector('canvas').addEventListener('click', e => {
+  const t = (Date.now() - t0) / 1000;
+  if (t > 5) {
+    explode();
+  }
+});
+document.addEventListener('wheel', regroup);
+
+</script>
+</head>
+<body>
+<div id="container"></div>
+</body>
+</html>
