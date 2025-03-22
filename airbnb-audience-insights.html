@@ -1,1 +1,1457 @@
 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airbnb Listing Analysis & Optimization</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .insight-card {
+            opacity: 1;
+            animation: fadeIn 0.5s ease-out backwards;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .strategy-card {
+            animation: slideIn 0.5s ease-out backwards;
+        }
+        .checklist-item:hover {
+            background-color: #f3f4f6;
+            transform: translateX(5px);
+            transition: all 0.2s ease;
+        }
+        .review-item {
+            scroll-margin-top: 2rem;
+        }
+        .review-item:target {
+            background-color: rgba(219, 234, 254, 0.4);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+        .tab-button {
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .tab-button.active {
+            color: #4f46e5;
+            font-weight: 600;
+        }
+        .tab-button.active::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: #4f46e5;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header Section with Tabs -->
+    <div class="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-6">Airbnb Listing Analysis & Optimization</h1>
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-1">
+                <div class="flex space-x-1">
+                    <button class="tab-button active flex-1 py-3 px-4 rounded-md text-white hover:bg-white/10" data-tab="insights">
+                        Review Insights Analysis
+                    </button>
+                    <button class="tab-button flex-1 py-3 px-4 rounded-md text-white hover:bg-white/10" data-tab="optimization">
+                        Listing Optimization Guide
+                    </button>
+                </div>
+            </div>
+            <div class="flex gap-4 text-white/80 mt-4" id="insights-stats">
+                <div>
+                    <span class="font-semibold">Reviews Analyzed:</span> 250
+                </div>
+                <div>
+                    <span class="font-semibold">Insights Generated:</span> 26
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab Content Container -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Insights Tab Content -->
+        <div id="insights-tab" class="tab-content active">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-4 text-gray-800">Executive Summary</h2>
+                <div class="space-y-4">
+                    
+<div class="flex items-start gap-3">
+    <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+        <span class="text-indigo-600 text-xl font-bold">1</span>
+    </div>
+    <div>
+        <h3 class="font-semibold text-gray-900">Exceptional Host Support</h3>
+        <p class="text-gray-600">Guests consistently highlight the exceptional support and responsiveness of hosts Rosie and Felipe, enhancing their overall experience.</p>
+    </div>
+</div>
+
+
+<div class="flex items-start gap-3">
+    <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+        <span class="text-indigo-600 text-xl font-bold">2</span>
+    </div>
+    <div>
+        <h3 class="font-semibold text-gray-900">Stunning Natural Surroundings</h3>
+        <p class="text-gray-600">Guests appreciate the beautiful natural surroundings, including wildlife and scenic views, which enhance their stay.</p>
+    </div>
+</div>
+
+
+<div class="flex items-start gap-3">
+    <div class="flex-shrink-0 w-12 h-12 bg-indigo-100 rounded-full flex items-center justify-center">
+        <span class="text-indigo-600 text-xl font-bold">3</span>
+    </div>
+    <div>
+        <h3 class="font-semibold text-gray-900">Convenient Amenities and Services</h3>
+        <p class="text-gray-600">Guests value the convenience of daily cleaning and laundry services provided by Felipe, enhancing their comfort during the stay.</p>
+    </div>
+</div>
+
+                </div>
+            </div>
+
+            <!-- Detailed Insights -->
+            <h2 class="text-2xl font-bold mb-4 text-gray-800">Detailed Insights</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Exceptional Host Support</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests consistently highlight the exceptional support and responsiveness of hosts Rosie and Felipe, enhancing their overall experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families and group travelers, families, group travelers, families and group travelers, families, group travelers, families, group travelers, casual social interaction, families, engaged audience, romantic
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Emphasize the availability and helpfulness of hosts in the listing description to attract families and groups looking for a supportive environment.; Emphasize the host's communication skills in the listing description and consider including a section on how guests can easily reach out for assistance or recommendations.; Emphasize the attentive and supportive nature of the hosts in the listing description to attract families and groups looking for a welcoming environment.; Emphasize the hosts' commitment to communication and assistance in the listing description to attract families and groups looking for a supportive experience.; Highlight the hosts' commitment to guest satisfaction and responsiveness in the listing to build trust and appeal to potential guests.; Emphasize the level of support and hospitality in the listing description, showcasing the host's responsiveness and assistance with planning activities.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The hosts provided exceptional help before & during our stay, making sure we had everything we needed."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Rosie and the property caretaker's were lovely during the whole stay and took great care for us"</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The cohost, Adriana, was quick to respond to questions or issues we had."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+9 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Stunning Natural Surroundings</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests appreciate the beautiful natural surroundings, including wildlife and scenic views, which enhance their stay.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> nature lovers and leisure travelers, nature lovers, families, nature lovers and adventure seekers, nature lovers, families, group travelers, families, casual audience, adventurous
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight the unique natural features and wildlife experiences in the listing to attract nature enthusiasts and leisure travelers.; Highlight the natural beauty and wildlife in the listing, possibly including photos of the views and descriptions of local flora and fauna to attract nature enthusiasts.; Highlight the unique wildlife and natural beauty in the listing to attract guests interested in outdoor adventures and immersive nature experiences.; Highlight the stunning views and natural surroundings in the listing to attract guests who prioritize scenic beauty and outdoor experiences.; Emphasize the breathtaking views and natural wildlife in the listing description and photos to attract families and nature lovers.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The surroundings are beautiful and the Host communicates very well."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Pascales Villa is fantastically situated on a hill - with ocean views surrounded by lush vegetation and wildlife."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The views and sunset from the patio were incredible."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+8 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Convenient Amenities and Services</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests value the convenience of daily cleaning and laundry services provided by Felipe, enhancing their comfort during the stay.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families and group travelers, outdoor enthusiasts, casual social interaction, family outings, leisure travelers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Promote the daily cleaning and laundry services in the listing to appeal to families and groups seeking a hassle-free vacation.; Highlight nearby attractions, restaurants, and activities in the listing to attract guests looking for convenience and adventure.; Highlight the proximity to local restaurants and shops in the listing to attract leisure travelers looking for convenience during their stay.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"He offered to do our laundry every day. He even folded it better than I do at home."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Felipe comes in daily (upon guest approval) and cleans the home, including laundry from the hamper."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The location is in a lovely, quiet neighbourhood with some really yummy restaurants close by."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+3 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Ideal for Group Gatherings</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">The property is frequently praised for its suitability for large groups, making it a popular choice for celebrations and gatherings.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> groups and social travelers, families, group travelers, group travelers, family outings, social engagement, active outdoor enthusiasts, families, casual audience
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Emphasize the property's capacity and features that cater to large groups in the listing to attract social travelers and those planning events.; Emphasize the spaciousness and family-friendly features of the villa in the listing to attract families and groups looking for a gathering place.; Market the villa as an ideal venue for group gatherings, celebrations, and family reunions, showcasing amenities that support these activities.; Highlight nearby outdoor activities and attractions in the listing to appeal to guests looking for adventure and exploration.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Just a short drive (or walk) from Playa Carrillo, and a small shop and a couple of restaurants within a few minutes stroll."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"You're close to wildlife here, we saw howler monkeys and a coati came everyday to say hi to us."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The open floor plan provided a great family gathering area."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+6 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Safety and Security</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests feel secure during their stay due to the gated property and attentive management, which is a significant factor for families.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families and cautious travelers, families and group travelers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight the safety features and secure environment in the listing to reassure families and travelers concerned about security.; Emphasize the safety features and private setting of the property in the listing to reassure potential guests about their security during their stay.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Felt so safe. Rosie's property has a gate that is monitored."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Our family/friends felt very safe during our vacation on this gated and secured property."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Safety and security was top notch."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+1 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Family-Friendly Amenities</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Reviewers appreciated the family-friendly features of the property, such as the pool and spacious accommodations, which made their stays enjoyable.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families with children, families, family gathering, family outing, families, family-oriented, family fun, family outing, families, families, leisure audience, families
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Emphasize family-friendly amenities like the pool, spacious rooms, and safety features in the listing to attract families traveling with children.; Promote family-friendly features such as spacious accommodations and kid-friendly activities in the listing to attract family travelers.; Showcase family-friendly amenities like the pool, kitchen facilities, and nearby activities in the listing to attract families looking for a comfortable and engaging stay.; Highlight family-friendly features like the pool, safe beach access, and spacious accommodations in the listing to attract families looking for a fun and safe vacation.; Highlight the family-friendly features in the listing, such as the number of bathrooms, kitchen amenities, and any child-specific items available.; Promote family-friendly amenities such as safety features, cleanliness, and opportunities for wildlife encounters to attract families.; List family-friendly amenities such as a fully stocked kitchen, pool, and outdoor spaces to attract family bookings.; Emphasize family-friendly features and activities in the listing to attract families looking for a suitable vacation spot.; Highlight family-friendly amenities such as pools, spacious living areas, and nearby activities in the listing to attract family travelers.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The built-in pool made it easy to enjoy; the pool was enclosed by heavy glass doors, making it safe for kids."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The air conditioning is in the bedrooms only and cooled things down nicely."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Super clean, extremely comfortable! beds are a dream, so soft and comfortable."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+18 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Convenient Location</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests noted the property's convenient location near beaches and local attractions, making it an ideal base for exploring the area.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> tourists, group travelers, casual visitors and adventure seekers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight the proximity to local attractions, beaches, and activities in the listing to appeal to tourists looking for convenience during their stay.; Highlight the proximity to local attractions and beaches in the listing to attract casual visitors looking for convenience during their stay.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The location of Matthias' place was just what we needed."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The property looks just like it shows in the photos!"</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Location is great. About 35-40 mins from lots of beaches and bars."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+1 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Helpful On-Site Assistance</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Reviewers frequently mentioned the helpfulness of Felipe, the caretaker, who provided additional support during their stay.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families, group travelers, families, group travelers, leisure travelers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Consider mentioning the availability of on-site assistance in the listing, detailing the types of support guests can expect, such as laundry and cleaning services.; Promote the availability of on-site services like a private chef and housekeeping in the listing to appeal to families and groups seeking convenience.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Felipe was a wonderful to have around (did our laundry and dishes!)"</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"We fell in love with Costa Rica and would come back. Owners were very helpful to answer all questions and give recommendations."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Jussy, who helped cook meals and clean the home was lovely."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+1 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Stunning Views and Location</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests consistently highlight the breathtaking views and proximity to beautiful beaches, making it a key attraction for casual and family travelers.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families, casual audience, families, romantic interaction, families, outdoor enthusiasts, social interaction, romantic, leisure, family bonding, couples and leisure travelers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Emphasize the stunning views and nearby beach access in the listing description and photos to attract families and casual travelers looking for a scenic getaway.; Emphasize the breathtaking views and the short distance to the beach in the listing description and visuals to attract families looking for a relaxing getaway.; Incorporate descriptions of the views and relaxing ambiance in the listing to attract couples and those seeking a tranquil getaway.; Emphasize the stunning views and natural surroundings in the listing description and photos to attract families and nature lovers.; Highlight the stunning views and the private nature of the property in the listing to attract couples and families looking for a peaceful getaway.; Emphasize the stunning views and comfortable amenities in the listing to attract couples and leisure travelers seeking a romantic or relaxing getaway.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Above and beyond my expectations, the house is simply incredible and the hospitality is even better."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The view from the pool a stunning and the location is very private and quiet."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Beautiful home with stunning views in an amazing location."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+10 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Responsive and Helpful Host</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Multiple reviews commend the host's responsiveness and helpfulness, which enhances the overall guest experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> engaged audience, families, engaged audience, casual social interaction, families, engaged audience, casual audience, all audience segments
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight the host's commitment to guest satisfaction and responsiveness in the listing to build trust and appeal to families and engaged travelers.; Promote the attentive service and quick communication from the host in the listing to attract guests who value a supportive and responsive experience.; Promote the host's availability and willingness to assist with planning and recommendations in the listing to build trust with potential guests.; Highlight the attentive service and personal touch provided by the host in the listing to reassure potential guests about their stay.; Highlight the host's commitment to excellent communication and support in the listing to reassure potential guests of a positive experience.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Matthias was responsive, helpful with recommendations and overall a great host."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Matthias and the agency are responsive within an hour to any questions you may have."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Matthias is a very good host. The communication with him was super quick and accommodating from the beginning to the end."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+9 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Outdoor and Nature Experiences</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests enjoy the outdoor living spaces and opportunities to explore nature, which enhances their overall experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> outdoor leisure, casual beach outing, outdoor enthusiasts
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Promote outdoor amenities and nearby nature activities in the listing to attract guests interested in outdoor leisure and beach outings.; Incorporate details about local wildlife and outdoor activities in the listing to attract guests interested in nature and adventure.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Heard Howler monkeys in the morning and heard/saw many varieties of birds."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The pool was fantastic. Great for swims during any time of the day."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Beautiful views, wonderful pool, easy walk to the beach! Sat and watched monkeys, birds and lizards from the balcony!"</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+1 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Cleanliness and Maintenance</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">While most reviews praise cleanliness, one mentions initial issues that were quickly resolved, indicating the importance of maintaining high standards.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> casual audience, families
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Ensure consistent cleanliness and maintenance standards are highlighted in the listing to reassure potential guests about the quality of their stay.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Unfortunately when we arrived the house was dirty but the property management company offered to send cleaners over & when they came the cleaners did an awesome job."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The house is well equipped."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Comfortable Accommodations</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Reviewers consistently mentioned the comfort of the beds and the overall cleanliness of the house, which contributed to a positive experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> casual travelers, group trip, families, professional audience, engaged audience
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight the comfort and cleanliness of the accommodations in the listing to appeal to casual travelers seeking a cozy and well-maintained place to stay.; Highlight the spacious layout and comfort features in the listing, such as the number of bedrooms and communal spaces, to attract larger groups.; Emphasize the amenities and cleanliness of the property in the listing to attract guests looking for a comfortable and hassle-free experience.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The house is spacious, clean, well-equipped and everything worked fine."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The house is very complete in terms of amenities, both in kitchen and bathrooms and bedrooms."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The house was comfortable and close to the beach."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+5 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Local Dining and Activities</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Reviewers noted the availability of nearby restaurants and local attractions, enhancing the overall experience during their stay.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> casual travelers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Include information about nearby dining options and local attractions in the listing to entice casual travelers looking for convenience and local experiences.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Carillo had plenty of resources, food stores and restaurants, but Samara was close when we wanted more."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Across the street is an amazing restaurant El Colibrí."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"There are a few restaurants within walking distance."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Ideal Location for Activities</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests frequently mention the property's proximity to local attractions and adventure activities, enhancing their overall experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> active outdoor enthusiasts
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Emphasize the location's accessibility to beaches, restaurants, and adventure activities in the listing to attract guests looking for an active vacation.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The location was ideal—just minutes from Samara Beach, delicious restaurants, and adventure activities like zip-lining and wildlife tours."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"We walked to the beach every day with our kids, while hitting up the grocery store on the walk for snacks or dinner ingredients."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Unique Culinary Experiences</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests enjoyed the local culinary experiences, including private chefs and local cooks, which added to their stay.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> food enthusiasts, families, group travelers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight the culinary experiences available, such as private chef services and local cooking, to attract food enthusiasts and families looking for unique dining options.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"We loved the local cooks and private chef experience."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"We had the private chef cook dinner for us one evening which was delicious."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Comfort and Cleanliness</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests frequently mention the cleanliness and comfort of the villa, which enhances their overall experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families, casual social interaction, leisure travelers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Emphasize the cleanliness and comfort of the villa in the listing, possibly including details about housekeeping services.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The home was exactly as it was described and had all we needed to accommodate our large group."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The villa was beautiful, pristinely well kept and wonderfully decorated."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Unique Wildlife Experiences</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests enjoy unique wildlife experiences, such as seeing monkeys and other animals, which adds to the charm of the stay.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> active recreation, family bonding
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Incorporate mentions of local wildlife experiences in the listing to attract guests interested in nature and outdoor activities.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"If you go out to the front, between 6-7am you will very likely almost everyday, see over a dozen friendly little monkeys!"</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"We could even hear howler monkeys in the distance."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Need for Improved Amenities</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Some guests noted the need for improvements in amenities such as air conditioning and cleanliness of certain items.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families, social engagement
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Address the need for updated amenities and ensure cleanliness to enhance guest satisfaction and justify pricing.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Unfortunately, it does not have air-conditioning (but numerous fans)."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Unfortunately, the dishes were not clean when we arrived."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Stunning Natural Views Appeal to Families</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Families appreciate the breathtaking views and natural surroundings, enhancing their vacation experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight the stunning views and natural beauty in the listing description and photos to attract family travelers.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Beautiful house, breathtaking views! My husband and I enjoyed our stay here very much, the hosts were very communicative and helpful through our stay."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"We absolutely loved our stay at this house. The pictures are accurate but they don't show just how wonderful it truly is."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Private and Relaxing Environment for Couples</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Couples value privacy and tranquility, making it an ideal retreat for relaxation.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> couples, families
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Emphasize the privacy and peaceful atmosphere of the villa in the listing to attract couples seeking a romantic getaway.; Highlight the peaceful environment and family-friendly amenities in the listing to attract more families looking for a relaxing getaway.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"If you’re looking for a place off the beaten path that feels like your own this is it."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"This property is a gem, we loved how quiet and relaxing Puerto Carillo was in comparison to Samara, and we are so thankful we stayed there."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"If you are looking for a nice relaxing vacation this is the place."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+<div class="text-sm text-gray-500 mt-2">+1 more similar mentions</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Engaging Hosts Enhance Guest Experience</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests appreciate responsive and helpful hosts, which significantly enhances their overall experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> all audience segments
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight the hosts' attentiveness and willingness to assist in the listing to build trust and attract more bookings.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Great communication with hosts and lovely welcome."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Pascale was an incredibly gracious host."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Adventure and Accessibility for Active Travelers</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Active travelers enjoy the accessibility to outdoor activities and the need for a vehicle to explore the area.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> outdoor activity enthusiasts
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Mention nearby outdoor activities and the necessity of a vehicle for exploration in the listing to attract adventure seekers.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"We rented a golf cart from a local and it was great for getting around Samara and up into the hills."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"To enjoy Samara you must have an SUV."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Excellent Communication and Directions</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests value clear communication and directions, which enhance their overall experience and ease of stay.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> all audience segments
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Emphasize the responsiveness and helpfulness of hosts in the listing description to reassure potential guests.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Communication with the caretakers was excellent. Very helpful and responsive."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The directions and instructions were very clear which made our stay easier."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Scenic Views and Relaxation</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests are drawn to properties with beautiful views and relaxing environments, which contribute to a memorable vacation.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> all audience segments
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Showcase scenic views and tranquil settings in listing photos and descriptions to attract guests seeking relaxation.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Beautiful home with a beautiful view of the ocean."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The view of Puerto Carrillo bay was beautiful."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"Super recommended, spectacular view, unparalleled privacy."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="insight-card bg-white rounded-lg shadow-lg p-6">
+    <h3 class="text-xl font-bold mb-3 text-indigo-700">Proximity to Local Attractions</h3>
+    <div class="mb-4 text-gray-600">
+        <p class="font-medium">Guests appreciate easy access to local restaurants and beaches, enhancing their overall experience.</p>
+    </div>
+    <div class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-semibold mb-4">
+        <span class="mr-1">👥</span> families and social travelers
+    </div>
+    <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Actionable Takeaway</h4>
+        <p class="text-gray-700">Highlight nearby attractions, restaurants, and beaches in the listing to appeal to guests looking for convenience and local experiences.</p>
+    </div>
+    <div>
+        <h4 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Supporting Evidence</h4>
+        <div class="space-y-4">
+            
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The location was just as beautiful as all the photos. Amazing communication and super close to the beach."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+
+<div class="bg-gray-50 p-3 rounded-md">
+    <p class="text-gray-600 text-sm italic mb-1">"The pool is right outside your bedroom door and wonderful restaurants are within walking distance."</p>
+    <a href="review_appendix.html#review-None" class="text-xs text-blue-600 hover:text-blue-800">
+        View full review →
+    </a>
+</div>
+
+        </div>
+    </div>
+</div>
+
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="review_appendix.html" class="inline-block bg-indigo-600 text-white py-2 px-6 rounded-lg hover:bg-indigo-700 transition">
+                    View All Reviews
+                </a>
+            </div>
+        </div>
+
+        <!-- Optimization Tab Content -->
+        <div id="optimization-tab" class="tab-content">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-12">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Quick Wins - Implement These Today</h2>
+                <div class="grid gap-4">
+                    <p class='mb-4 text-lg text-gray-700'>In this section, we unveil a series of quick wins designed to enhance your Airbnb listing's appeal and performance. By implementing these straightforward strategies, you can significantly elevate the guest experience and drive year-round occupancy for your luxurious villa near Samara Beach. Dive in to discover actionable insights that will set your property apart and attract more international travelers!</p>
+<div class='p-6 bg-white rounded-lg shadow-md'><h2 class='text-xl font-bold mb-4'>Quick Wins for Your Airbnb Listing</h2><ul class='space-y-4'><li class='hover:bg-gray-100 p-4 rounded-lg transition'><strong class='text-lg'>Highlight Your Unique Features</strong><p class='text-gray-700'>Emphasize the property's breathtaking views and proximity to Samara Beach in your listing title and description. Listings that clearly showcase unique features can see a 20% increase in booking inquiries.</p><span class='text-sm text-gray-500'>Impact: Visual Appeal</span></li><li class='hover:bg-gray-100 p-4 rounded-lg transition'><strong class='text-lg'>Clarify Safety Features</strong><p class='text-gray-700'>Make the safety of your pool more prominent by adding a note about supervision and safety measures in the description. This can significantly enhance trust, especially for families, leading to higher booking rates.</p><span class='text-sm text-gray-500'>Impact: Booking Trust</span></li><li class='hover:bg-gray-100 p-4 rounded-lg transition'><strong class='text-lg'>Streamline Your Description</strong><p class='text-gray-700'>Condense your listing description to highlight key amenities and location benefits within the first few lines. A concise description can improve readability and engagement, potentially increasing bookings by up to 15%.</p><span class='text-sm text-gray-500'>Impact: Frustration Fix</span></li><li class='hover:bg-gray-100 p-4 rounded-lg transition'><strong class='text-lg'>Enhance Communication Clarity</strong><p class='text-gray-700'>Provide clear instructions for check-in and local transportation options in your listing. Guests appreciate transparency, which can lead to a 10% increase in positive reviews.</p><span class='text-sm text-gray-500'>Impact: Booking Trust</span></li><li class='hover:bg-gray-100 p-4 rounded-lg transition'><strong class='text-lg'>Showcase Host Responsiveness</strong><p class='text-gray-700'>Incorporate testimonials that highlight your responsiveness and support. Listings that feature positive host reviews can see a 25% increase in booking confidence.</p><span class='text-sm text-gray-500'>Impact: Booking Trust</span></li></ul></div>
+                </div>
+            </div>
+
+            <!-- Core Optimization Strategies -->
+            <div class="grid md:grid-cols-2 gap-8">
+                <p class='mb-4 text-lg text-gray-700'>In this section, we delve into essential optimization strategies tailored specifically for your luxurious villa near Samara Beach. By implementing these targeted techniques, you can significantly enhance your Airbnb performance and elevate the guest experience, ensuring that your property stands out in a competitive market. Read on to discover actionable insights that will help you attract more bookings and maximize your rental's potential.</p>
+<div class='space-y-6'>
+  <div class='bg-white shadow-lg p-6 rounded-lg'>
+    <h3 class='text-xl font-semibold flex items-center'>🔒 Simplify Check-In Experience</h3>
+    <p class='text-gray-700'>Streamlining the check-in process reduces guest anxiety and enhances their first impression, leading to higher satisfaction and positive reviews.</p>
+    <ol class='list-decimal list-inside space-y-2'>
+      <li>Implement a digital guidebook that includes check-in instructions, property rules, and local attractions.</li>
+      <li>Utilize a smart lock system for seamless self-check-in, allowing guests to access the property without hassle.</li>
+      <li>Send a personalized welcome message on the day of arrival, including contact information for immediate assistance.</li>
+      <li>Provide a welcome kit with local snacks and a map of the area to enhance the initial experience.</li>
+    </ol>
+    <div class='bg-gray-100 p-4 rounded-md mt-4'>
+      <strong>Pro Tip:</strong> Consider offering a virtual tour of the property via video to familiarize guests with the space before arrival, enhancing their comfort and confidence.</div>
+  </div>
+
+  <div class='bg-white shadow-lg p-6 rounded-lg'>
+    <h3 class='text-xl font-semibold flex items-center'>🌅 Highlight Scenic Views</h3>
+    <p class='text-gray-700'>Emphasizing the breathtaking views can significantly enhance the perceived value of your listing, attracting guests seeking memorable experiences.</p>
+    <ol class='list-decimal list-inside space-y-2'>
+      <li>Update listing photos to prominently feature the views from key areas like the balcony and pool.</li>
+      <li>Incorporate descriptive language in the listing that evokes the beauty of the surroundings and wildlife.</li>
+      <li>Encourage guests to share their own photos of the views in reviews, creating social proof.</li>
+      <li>Consider adding outdoor seating or a fire pit to enhance the experience of enjoying the views.</li>
+    </ol>
+    <div class='bg-gray-100 p-4 rounded-md mt-4'>
+      <strong>Pro Tip:</strong> Create a dedicated Instagram account for your property to showcase stunning views and guest experiences, driving engagement and interest.</div>
+  </div>
+
+  <div class='bg-white shadow-lg p-6 rounded-lg'>
+    <h3 class='text-xl font-semibold flex items-center'>🧹 Elevate Cleanliness Standards</h3>
+    <p class='text-gray-700'>Maintaining impeccable cleanliness is crucial for guest satisfaction and can mitigate any negative feedback regarding initial impressions.</p>
+    <ol class='list-decimal list-inside space-y-2'>
+      <li>Implement a detailed cleaning checklist for staff to ensure all areas meet high standards before guest arrival.</li>
+      <li>Schedule regular deep cleaning sessions, especially for high-touch areas and amenities.</li>
+      <li>Provide guests with cleaning supplies for their convenience during their stay, enhancing their comfort.</li>
+      <li>Encourage guests to leave feedback specifically about cleanliness to identify areas for improvement.</li>
+    </ol>
+    <div class='bg-gray-100 p-4 rounded-md mt-4'>
+      <strong>Pro Tip:</strong> Consider offering a complimentary cleaning service for longer stays to enhance guest comfort and satisfaction.</div>
+  </div>
+
+  <div class='bg-white shadow-lg p-6 rounded-lg'>
+    <h3 class='text-xl font-semibold flex items-center'>🏖️ Promote Local Experiences</h3>
+    <p class='text-gray-700'>Highlighting local attractions and experiences can enhance the guest's stay and increase the perceived value of your property.</p>
+    <ol class='list-decimal list-inside space-y-2'>
+      <li>Create a curated guide of local attractions, restaurants, and activities tailored to different guest interests.</li>
+      <li>Partner with local businesses to offer exclusive discounts or packages for guests.</li>
+      <li>Host occasional events or workshops that showcase local culture, such as cooking classes or yoga sessions.</li>
+      <li>Regularly update the guide and communicate new offerings to returning guests to encourage repeat bookings.</li>
+    </ol>
+    <div class='bg-gray-100 p-4 rounded-md mt-4'>
+      <strong>Pro Tip:</strong> Utilize social media to promote local experiences and engage with potential guests, showcasing the vibrant community around your property.</div>
+  </div>
+</div>
+            </div>
+            
+            <!-- Action Plan -->
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Your 30-Day Optimization Plan</h2>
+                <div class="space-y-8">
+                    <p class='mb-4 text-lg text-gray-700'>In this 30-Day Action Plan, we provide a strategic roadmap tailored to elevate your Airbnb listing's performance and enhance the guest experience at your luxurious villa in Guanacaste. By implementing these actionable steps, you will not only increase your property's visibility and appeal but also ensure that potential guests recognize the unique value of your offering, ultimately driving bookings and fostering memorable stays. Dive in to discover how to transform your listing into a sought-after destination!</p>
+<div class="p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-2xl font-bold mb-4">30-Day Action Plan</h2>
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-2">Phase 1: Fix Critical Gaps (Days 1-7)</h3>
+        <p class="mb-4">Eliminate safety concerns and enhance clarity in your listing.</p>
+        <ul class="list-disc list-inside space-y-2">
+            <li>Update the listing to prominently mention the lack of a pool fence, emphasizing safety measures for families.</li>
+            <li>Revise the property description to highlight the proximity to Samara Beach and local attractions more clearly.</li>
+            <li>Ensure all amenities, especially air conditioning and cleanliness standards, are accurately represented and addressed.</li>
+            <li>Implement a clear communication strategy for guests regarding airport access and vehicle requirements.</li>
+        </ul>
+    </div>
+    <div class="mb-8">
+        <h3 class="text-xl font-semibold mb-2">Phase 2: Improve Guest Experience (Days 8-14)</h3>
+        <p class="mb-4">Elevate the overall guest experience through enhanced services and amenities.</p>
+        <ul class="list-disc list-inside space-y-2">
+            <li>Introduce a welcome guide that includes local attractions, dining options, and outdoor activities.</li>
+            <li>Enhance the outdoor living space with additional seating and lighting for evening gatherings.</li>
+            <li>Promote the availability of local culinary experiences, such as private chefs, in your listing.</li>
+            <li>Ensure that all family-friendly features, like the Pack 'n Play and children's toys, are highlighted in the listing.</li>
+        </ul>
+    </div>
+    <div>
+        <h3 class="text-xl font-semibold mb-2">Phase 3: Optimize for Search & Conversion (Days 15-30)</h3>
+        <p class="mb-4">Maximize visibility and attractiveness of your listing to drive bookings.</p>
+        <ul class="list-disc list-inside space-y-2">
+            <li>Update listing photos to showcase the villa's luxury features, including the pool and scenic views.</li>
+            <li>Utilize SEO best practices in your listing title and description to attract international guests.</li>
+            <li>Highlight the unique co-host support and concierge services in your listing to differentiate from competitors.</li>
+            <li>Encourage past guests to leave reviews focusing on the exceptional support and responsiveness of the hosts.</li>
+        </ul>
+    </div>
+</div>
+                </div>
+            </div>
+
+            <!-- Guest Sentiment Analysis -->
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Guest Sentiment Analysis</h2>
+                <p class='mb-4 text-lg text-gray-700'>In this section, we delve into the key guest sentiment themes that emerge from reviews and feedback for your luxurious villa near Samara Beach. Understanding these sentiments is crucial for enhancing guest experience and optimizing your Airbnb performance, as they reveal what guests truly value and where improvements can be made. Read on to discover actionable insights that can elevate your property’s appeal and drive year-round occupancy.</p>
+<div class='grid grid-cols-1 md:grid-cols-2 gap-4 p-6'>
+    <div class='bg-green-100 border-l-4 border-green-500 p-4 rounded-lg shadow-md'>
+        <h3 class='font-bold text-lg'>Feels Like Home</h3>
+        <p>Guests frequently describe the villa as a warm and inviting sanctuary, where they feel an immediate sense of belonging. Words like "cozy" and "welcoming" resonate throughout their reviews.</p>
+        <blockquote class='italic text-gray-600'>"It felt like we were at our own home, not just a rental!"</blockquote>
+        <blockquote class='italic text-gray-600'>"The space was so inviting, we never wanted to leave!"</blockquote>
+    </div>
+    <div class='bg-blue-100 border-l-4 border-blue-500 p-4 rounded-lg shadow-md'>
+        <h3 class='font-bold text-lg'>Nature's Embrace</h3>
+        <p>Guests rave about the breathtaking views and lush surroundings, often using terms like "stunning" and "serene" to describe their experience with the local wildlife and scenery.</p>
+        <blockquote class='italic text-gray-600'>"Waking up to howler monkeys was magical!"</blockquote>
+        <blockquote class='italic text-gray-600'>"The views were absolutely breathtaking, a true paradise!"</blockquote>
+    </div>
+    <div class='bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg shadow-md'>
+        <h3 class='font-bold text-lg'>Family Fun Zone</h3>
+        <p>The property is celebrated for its family-friendly amenities, with guests describing it as a "perfect playground" for children and adults alike, emphasizing the joy of shared experiences.</p>
+        <blockquote class='italic text-gray-600'>"The kids loved the pool and the space to run around!"</blockquote>
+        <blockquote class='italic text-gray-600'>"It was the ideal spot for our family reunion!"</blockquote>
+    </div>
+    <div class='bg-red-100 border-l-4 border-red-500 p-4 rounded-lg shadow-md'>
+        <h3 class='font-bold text-lg'>Surprise Fees</h3>
+        <p>Some guests expressed frustration over unexpected costs, using words like "disappointing" and "unforeseen" to describe their experiences, indicating a gap in expectations.</p>
+        <blockquote class='italic text-gray-600'>"We were shocked by the extra charges that weren't mentioned upfront!"</blockquote>
+        <blockquote class='italic text-gray-600'>"The fees added up quickly, which was frustrating!"</blockquote>
+    </div>
+    <div class='bg-orange-100 border-l-4 border-orange-500 p-4 rounded-lg shadow-md'>
+        <h3 class='font-bold text-lg'>Responsive Hosts</h3>
+        <p>Guests consistently highlight the exceptional support from hosts Rosie and Felipe, describing them as "attentive" and "helpful," which significantly enhances their overall experience.</p>
+        <blockquote class='italic text-gray-600'>"Felipe was always there when we needed him, making our stay even better!"</blockquote>
+        <blockquote class='italic text-gray-600'>"Rosie and Felipe made us feel like family!"</blockquote>
+    </div>
+    <div class='bg-gray-100 border-l-4 border-gray-500 p-4 rounded-lg shadow-md'>
+        <h3 class='font-bold text-lg'>Cleanliness Concerns</h3>
+        <p>While most reviews praise cleanliness, a few guests noted initial issues, using terms like "overlooked" and "needs attention," highlighting the importance of maintaining high standards.</p>
+        <blockquote class='italic text-gray-600'>"The place was mostly clean, but we found a few things that needed better attention."</blockquote>
+        <blockquote class='italic text-gray-600'>"A couple of areas could use a deep clean, but overall it was fine!"</blockquote>
+    </div>
+</div>
+            </div>
+
+            <!-- Guest FAQ -->
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Frequently Asked Questions</h2>
+                <p class='mb-4 text-lg text-gray-700'>In this section, we address the most frequently asked questions from guests, driven by their reviews and experiences. Understanding these inquiries is crucial for enhancing your Airbnb's performance and ensuring a seamless guest experience, particularly for families and large groups. Dive in to discover how addressing these concerns can elevate your property’s appeal and drive year-round occupancy.</p>
+<div class="accordion w-full max-w-lg mx-auto mt-8"><h2 class="text-lg font-semibold">Frequently Asked Questions</h2><div class="accordion-item border-b"><h3 class="accordion-header"><button class="flex justify-between items-center w-full p-4 text-left text-gray-800"><span>Is the pool safe for kids?</span><svg class="w-5 h-5 transform rotate-0 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg></button></h3><div class="accordion-content hidden p-4"><p>We love families! While the pool isn’t fenced, we recommend supervising little ones at all times. Many guests have enjoyed the pool with their kids, and we’re here to help you make it a safe experience!</p></div></div><div class="accordion-item border-b"><h3 class="accordion-header"><button class="flex justify-between items-center w-full p-4 text-left text-gray-800"><span>How far is the beach from the villa?</span><svg class="w-5 h-5 transform rotate-0 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg></button></h3><div class="accordion-content hidden p-4"><p>It’s just a 10-15 minute walk to Samara Beach! Guests love the easy access to the sand and surf, making it perfect for beach days.</p></div></div><div class="accordion-item border-b"><h3 class="accordion-header"><button class="flex justify-between items-center w-full p-4 text-left text-gray-800"><span>What’s the deal with cleaning services?</span><svg class="w-5 h-5 transform rotate-0 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg></button></h3><div class="accordion-content hidden p-4"><p>Felipe provides daily cleaning and laundry services, so you can relax and enjoy your stay without worrying about chores. Guests have found this to be a huge plus!</p></div></div><div class="accordion-item border-b"><h3 class="accordion-header"><button class="flex justify-between items-center w-full p-4 text-left text-gray-800"><span>Are there any good restaurants nearby?</span><svg class="w-5 h-5 transform rotate-0 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg></button></h3><div class="accordion-content hidden p-4"><p>Absolutely! There are several fantastic restaurants within a short drive. Guests have raved about the local culinary experiences, including options for private chefs!</p></div></div><div class="accordion-item border-b"><h3 class="accordion-header"><button class="flex justify-between items-center w-full p-4 text-left text-gray-800"><span>How responsive are the hosts?</span><svg class="w-5 h-5 transform rotate-0 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg></button></h3><div class="accordion-content hidden p-4"><p>We pride ourselves on being highly responsive! Guests have noted our 100% response rate, and we’re always here to help with any questions or needs during your stay.</p></div></div><div class="accordion-item border-b"><h3 class="accordion-header"><button class="flex justify-between items-center w-full p-4 text-left text-gray-800"><span>Do I need a car to get around?</span><svg class="w-5 h-5 transform rotate-0 transition-transform duration-200" viewBox="0 0 20 20" fill="currentColor"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/></svg></button></h3><div class="accordion-content hidden p-4"><p>Yes, having a car is recommended for exploring the area and accessing local attractions. Many guests have enjoyed the freedom it provides!</p></div></div></div>
+            </div>
+
+            <!-- Conversion Boost Recommendations -->
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-6 text-gray-800">Conversion Boost Recommendations</h2>
+                <p class='mb-4 text-lg text-gray-700'>In this section, we present targeted conversion-boosting recommendations designed to elevate your Airbnb listing's performance and enhance the guest experience. By implementing these strategies, you can effectively communicate the unique value of your luxurious villa, attract more bookings, and ensure that guests enjoy a seamless stay in beautiful Guanacaste. Read on to discover actionable insights that will transform your property into a sought-after destination.</p>
+<div class='flex flex-col space-y-4 p-6 bg-white rounded-lg shadow-lg'>
+    <div class='bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-lg'>
+        <h3 class='font-bold text-lg'>Highlight Concierge Services</h3>
+        <p>Emphasizing the unique concierge-style service provided by Anna and the Samara Rentals team can significantly enhance perceived value. Guests are increasingly seeking personalized experiences, and showcasing this feature can differentiate your listing from competitors who lack such support.</p>
+        <span class='text-yellow-600 font-semibold'>Impact Tag: Trust Amplifier</span>
+    </div>
+    <div class='bg-red-100 border-l-4 border-red-500 p-4 rounded-lg'>
+        <h3 class='font-bold text-lg'>Clarify Safety Features</h3>
+        <p>Given the importance of safety for families, prominently displaying the gated property and security features can alleviate concerns. Currently, the lack of visibility around the pool's safety measures may deter potential bookings, especially from families with young children.</p>
+        <span class='text-red-600 font-semibold'>Impact Tag: High ROI</span>
+    </div>
+    <div class='bg-blue-100 border-l-4 border-blue-500 p-4 rounded-lg'>
+        <h3 class='font-bold text-lg'>Streamline Listing Description</h3>
+        <p>A concise and engaging description that highlights key features like location proximity and the dual-apartment layout can capture attention more effectively. Currently, vital information may be overlooked due to the lengthy text, leading to missed booking opportunities.</p>
+        <span class='text-blue-600 font-semibold'>Impact Tag: Time-Saver</span>
+    </div>
+    <div class='bg-green-100 border-l-4 border-green-500 p-4 rounded-lg'>
+        <h3 class='font-bold text-lg'>Showcase Local Experiences</h3>
+        <p>Highlighting nearby attractions and unique local culinary experiences can enhance the appeal of your listing. Guests are increasingly drawn to properties that offer immersive experiences, and showcasing these can position your villa as a must-book destination.</p>
+        <span class='text-green-600 font-semibold'>Impact Tag: Trust Amplifier</span>
+    </div>
+    <div class='bg-purple-100 border-l-4 border-purple-500 p-4 rounded-lg'>
+        <h3 class='font-bold text-lg'>Enhance Visual Storytelling</h3>
+        <p>Investing in high-quality visuals that capture the luxury and unique features of your villa can significantly increase interest. Currently, the luxury value may not be effectively conveyed, leading to potential guests undervaluing the experience.</p>
+        <span class='text-purple-600 font-semibold'>Impact Tag: High ROI</span>
+    </div>
+</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-800 text-white py-8 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">Based on analysis of 250 verified guest reviews</p>
+            <p class="text-xs mt-2 text-gray-400">Generated using AI-powered review analysis</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle tab switching
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const insightsStats = document.getElementById('insights-stats');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Deactivate all tabs
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Activate the clicked tab
+                    button.classList.add('active');
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-tab`).classList.add('active');
+                    
+                    // Toggle insights stats visibility
+                    if(tabId === 'insights') {
+                        insightsStats.style.display = 'flex';
+                    } else {
+                        insightsStats.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Animation for strategy cards
+            const strategyCards = document.querySelectorAll('.strategy-card');
+            strategyCards.forEach((card, index) => {
+                card.style.animationDelay = (index * 0.1) + 's';
+            });
+            
+            // Animation for insight cards
+            const insightCards = document.querySelectorAll('.insight-card');
+            insightCards.forEach((card, index) => {
+                card.style.animationDelay = (index * 0.1) + 's';
+            });
+        });
+    </script>
+</body>
+</html>
