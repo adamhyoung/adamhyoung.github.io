@@ -5,49 +5,93 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Inter', sans-serif;
-    color: var(--dark);
-    background-color: var(--light);
-    line-height: 1.6;
-    overflow-x: hidden;
+html {
+    font-size: 16px;
     scroll-behavior: smooth;
+    height: 100%;
 }
 
+body {
+    font-family: var(--font-family-base);
+    color: var(--dark);
+    background-color: var(--light);
+    line-height: var(--line-height-base);
+    min-height: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+    padding-top: var(--header-height); /* Account for fixed header */
+}
+
+/* Typography */
 h1, h2, h3, h4, h5, h6 {
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 1rem;
+    margin: 0;
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    color: var(--dark);
 }
 
 p {
-    margin-bottom: 1rem;
+    margin: 0 0 var(--spacing-4);
 }
 
 a {
     text-decoration: none;
     color: var(--primary);
-    transition: color 0.3s ease;
+    transition: color var(--transition-normal);
 }
 
 a:hover {
     color: var(--primary-dark);
 }
 
-img {
+img, svg {
     max-width: 100%;
     height: auto;
     display: block;
 }
 
-/* Basic container and text alignment */
-.container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
 }
 
-.text-center {
-    text-align: center;
+/* Container */
+.container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* Basic Layout */
+main {
+    position: relative;
+    z-index: var(--z-base);
+}
+
+section {
+    position: relative;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Responsive Typography */
+@media (max-width: 767px) {
+    html {
+        font-size: 14px;
+    }
 }

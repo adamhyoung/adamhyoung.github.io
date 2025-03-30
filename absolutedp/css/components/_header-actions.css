@@ -1,0 +1,171 @@
+/* Header Action Buttons */
+.header-call,
+.header-quote {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-4);
+    border-radius: var(--radius-sm);
+    color: var(--white);
+    font-weight: var(--font-weight-semibold);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.01em;
+    transition: all var(--transition-normal);
+    white-space: nowrap;
+    backdrop-filter: blur(4px);
+    height: calc(var(--header-height) * 0.6); /* Proportional height */
+}
+
+/* Emergency Call Button */
+.header-call {
+    background: linear-gradient(180deg, 
+        var(--secondary) 0%,
+        var(--secondary-dark) 100%
+    );
+    border: 1px solid var(--secondary);
+    box-shadow: var(--shadow-secondary);
+}
+
+.header-call:hover {
+    background: linear-gradient(180deg, 
+        var(--secondary-dark) 0%,
+        var(--secondary-dark) 100%
+    );
+    border-color: var(--secondary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(243, 156, 18, 0.3);
+}
+
+.header-call:active {
+    transform: translateY(0);
+}
+
+/* Quote Button */
+.header-quote {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.header-quote:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.header-quote:active {
+    transform: translateY(0);
+}
+
+/* Icons in Buttons */
+.header-call i,
+.header-quote i {
+    margin-right: var(--spacing-2);
+    font-size: var(--font-size-base);
+    transition: transform var(--transition-normal);
+}
+
+.header-call:hover i,
+.header-quote:hover i {
+    transform: scale(1.1);
+}
+
+/* Scroll State Adjustments */
+.header-scrolled .header-call,
+.header-scrolled .header-quote {
+    height: calc(var(--header-height) * 0.5); /* Smaller on scroll */
+    padding: 0 var(--spacing-3);
+}
+
+/* Pulse Animation for Emergency */
+.pulse-animation::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    background: var(--secondary);
+    border-radius: inherit;
+    z-index: -1;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scale(1.05);
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+    .header-call,
+    .header-quote {
+        height: calc(var(--header-height) * 0.55);
+        padding: 0 var(--spacing-3);
+    }
+
+    .header-scrolled .header-call,
+    .header-scrolled .header-quote {
+        height: calc(var(--header-height) * 0.5);
+    }
+}
+
+@media (max-width: 767px) {
+    /* Icon-only buttons on mobile */
+    .header-call,
+    .header-quote {
+        width: calc(var(--header-height) * 0.7); /* Square proportion */
+        height: calc(var(--header-height) * 0.7);
+        min-width: 44px; /* Minimum touch target */
+        min-height: 44px;
+        padding: 0;
+        justify-content: center;
+    }
+    
+    .header-call span, 
+    .header-quote span {
+        display: none;
+    }
+    
+    .header-call i, 
+    .header-quote i {
+        margin: 0;
+        font-size: var(--font-size-xl);
+    }
+    
+    .pulse-animation::before {
+        inset: -2px;
+    }
+
+    /* Maintain size in scroll state */
+    .header-scrolled .header-call,
+    .header-scrolled .header-quote {
+        width: calc(var(--header-height) * 0.7);
+        height: calc(var(--header-height) * 0.7);
+    }
+}
+
+/* Tablet Optimization */
+@media (min-width: 768px) and (max-width: 991px) {
+    /* Show text only for call button */
+    .header-call {
+        padding: 0 var(--spacing-3);
+    }
+    
+    .header-quote {
+        width: calc(var(--header-height) * 0.6);
+        padding: 0;
+        justify-content: center;
+    }
+    
+    .header-quote span {
+        display: none;
+    }
+    
+    .header-quote i {
+        margin: 0;
+        font-size: var(--font-size-lg);
+    }
+}

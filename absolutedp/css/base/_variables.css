@@ -1,6 +1,7 @@
 :root {
     /* Brand Colors */
     --primary: #1a75bb;
+    --primary-rgb: 26, 117, 187; /* Added RGB values for gradients */
     --primary-dark: #0e4d7a;
     --primary-light: #4a9fdd;
     --secondary: #f39c12;
@@ -73,8 +74,21 @@
     /* Layout */
     --container-max: 1400px;
     --container-padding: 2rem;
-    --header-height: 80px;
+    --header-height: 90px; /* Increased height */
     --section-spacing: 80px;
+    --content-top-padding: var(--header-height);
+    
+    /* Z-index Stack (Consolidated) */
+    --z-negative: -1;
+    --z-base: 1;
+    --z-above: 10;
+    --z-sticky: 100;
+    --z-header: 1000;
+    --z-dropdown: 1050;
+    --z-drawer: 1100;
+    --z-modal: 1200;
+    --z-toast: 1300;
+    --z-tooltip: 1400;
     
     /* Border Radius */
     --radius-xs: 2px;
@@ -89,17 +103,26 @@
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
     
-    /* Z-index */
-    --z-drawer: 100;
-    --z-sticky: 200;
-    --z-header: 300;
-    --z-dropdown: 400;
-    --z-modal: 500;
-    
     /* Component-specific */
     --header-bg-scrolled: var(--overlay-primary);
     --nav-item-hover-bg: rgba(255, 255, 255, 0.15);
     --nav-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     --btn-hover-transform: translateY(-2px);
     --card-hover-transform: translateY(-5px);
+    
+    /* Mobile Breakpoints */
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --breakpoint-2xl: 1400px;
+    
+    /* Focus States */
+    --focus-ring-color: rgba(26, 117, 187, 0.25);
+    --focus-ring-width: 3px;
+    --focus-ring-offset: 2px;
+    
+    /* Call-to-Action */
+    --cta-shadow: 0 4px 6px rgba(26, 117, 187, 0.2);
+    --cta-shadow-hover: 0 6px 12px rgba(26, 117, 187, 0.25);
 }

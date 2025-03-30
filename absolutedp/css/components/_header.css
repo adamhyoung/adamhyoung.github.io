@@ -1,0 +1,164 @@
+/* Header Core Styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: var(--z-header);
+    background-color: rgba(var(--primary-rgb), 0.95);
+    transition: background-color var(--transition-normal);
+    height: var(--header-height);
+    box-shadow: var(--shadow-md);
+}
+
+/* Skip link styles */
+.skip-link {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--primary);
+    color: var(--white);
+    padding: var(--spacing-3) var(--spacing-4);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    z-index: calc(var(--z-header) + 1);
+    transition: top var(--transition-fast);
+    font-weight: var(--font-weight-medium);
+}
+
+.skip-link:focus {
+    top: 0;
+    outline: var(--focus-ring-width) solid var(--focus-ring-color);
+    outline-offset: var(--focus-ring-offset);
+}
+
+/* Add padding to body to account for fixed header */
+body {
+    padding-top: var(--header-height);
+}
+
+/* Scroll State */
+.header-scrolled {
+    background-color: var(--header-bg-scrolled);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: var(--shadow-lg);
+    height: calc(var(--header-height) * 0.85); /* Smaller on scroll */
+}
+
+/* Header Layout */
+.header-inner {
+    display: flex;
+    align-items: stretch; /* Allow children to stretch full height */
+    padding: 0 var(--container-padding);
+    max-width: var(--container-max);
+    margin: 0 auto;
+    height: 100%;
+    gap: var(--spacing-4); /* Consistent spacing */
+}
+
+/* Logo Styles */
+.logo {
+    display: flex;
+    align-items: center;
+    padding-right: var(--spacing-6);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-normal);
+}
+
+.logo img {
+    height: calc(var(--header-height) * 0.6); /* Proportional height */
+    width: auto;
+    filter: brightness(0) invert(1);
+    transition: all var(--transition-normal);
+}
+
+.header-scrolled .logo img {
+    height: calc(var(--header-height) * 0.5); /* Smaller on scroll */
+}
+
+/* Navigation Container */
+.desktop-nav {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Header Actions Container */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-4);
+    padding-left: var(--spacing-6);
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all var(--transition-normal);
+}
+
+/* Mobile Menu Trigger */
+.mobile-menu-trigger {
+    display: none; /* Hidden by default */
+    padding: var(--spacing-2);
+    color: var(--white);
+    font-size: var(--font-size-xl);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991px) {
+    header {
+        --header-height: 70px;
+    }
+    
+    .header-inner {
+        padding: 0 var(--spacing-4);
+    }
+
+    .desktop-nav {
+        display: none; /* Hide desktop nav */
+    }
+    
+    .mobile-menu-trigger {
+        display: flex; /* Show mobile trigger */
+        order: 1;
+    }
+    
+    .logo {
+        order: 2;
+        margin: 0 auto;
+        padding: 0;
+        border: none;
+    }
+    
+    .header-actions {
+        order: 3;
+        padding: 0;
+        border: none;
+    }
+
+    .header-scrolled {
+        height: calc(var(--header-height) * 0.9);
+    }
+}
+
+@media (max-width: 767px) {
+    header {
+        --header-height: 60px;
+    }
+    
+    .header-inner {
+        padding: 0 var(--spacing-3);
+        gap: var(--spacing-2);
+    }
+    
+    .logo img {
+        height: calc(var(--header-height) * 0.55);
+    }
+    
+    .header-actions {
+        gap: var(--spacing-2);
+    }
+
+    .header-scrolled {
+        height: var(--header-height); /* Maintain height on mobile */
+    }
+}

@@ -1,244 +1,61 @@
-/* Import Component Styles */
+/**
+ * Main CSS Entry Point
+ * Follows the architecture defined in CSS_INDEX.md
+ */
+
+/* Design System - Critical Path */
 @import 'base/_variables.css';
 @import 'base/_reset.css';
+
+/* Critical Path Components */
+@import 'components/_header.css';
+@import 'components/_desktop-nav.css';
+@import 'components/_mobile-nav.css';
+@import 'components/_header-actions.css';
+@import 'components/_hero.css';
+@import 'components/_buttons.css';
+
+/* Layout Framework */
 @import 'base/_utilities.css';
-@import 'components/_navigation.css';
 @import 'components/_sections.css';
-@import 'components/_footer.css';
+
+/* Content Sections - Can be deferred */
+@import 'components/_trust-signals.css';
+@import 'components/_services.css';
+@import 'components/_why-choose.css';
 @import 'components/_testimonials.css';
+
+/* Conversion Components */
 @import 'components/_forms.css';
 
-/* Trust Signals */
-.trust-signals {
-    margin-top: -30px;
-    width: 100%;
-    position: relative;
-    z-index: 10;
-}
+/* Enhancement Layer */
+@import 'animations.css';
+@import 'preloader.css';
 
-.trust-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.75rem 2rem;
-    background: var(--white);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-    border-radius: var(--radius-lg);
-}
+/**
+ * Critical Render Path Optimization:
+ * 1. Design system and reset
+ * 2. Header/navigation system
+ * 3. Hero section
+ * 4. Core buttons
+ * 
+ * Remaining styles can be loaded asynchronously
+ */
 
-.trust-section {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.trust-core {
-    flex: 0 1 auto;
-    display: flex;
-    gap: 2.5rem;
-    justify-content: center;
-}
-
-.trust-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.core-item {
-    flex-direction: column;
-    padding: 0 1rem;
-}
-
-.core-item i {
-    font-size: 1.2rem;
-    color: var(--primary);
-    margin-bottom: 0.2rem;
-}
-
-.core-item strong {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--primary-dark);
-    line-height: 1;
-    margin: 0.1rem 0;
-}
-
-.core-item span {
-    font-size: 0.85rem;
-    color: var(--gray);
-    white-space: nowrap;
-}
-
-/* BBB Rating */
-.bbb-rating {
-    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-    padding: 1rem;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--gray-light);
-}
-
-.bbb-logo {
-    font-size: 2rem;
-    color: #0066b2;
-}
-
-.rating-badge {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--gray);
-}
-
-.rating-grade {
-    display: block;
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #0066b2;
-}
-
-/* Trust Badges */
-.trust-badges {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    align-items: center;
-}
-
-.trust-badges img {
-    height: 50px;
-    width: auto;
-    filter: grayscale(0.2);
-    transition: filter 0.3s ease;
-}
-
-.trust-badges img:hover {
-    filter: grayscale(0);
-}
-
-/* Back to top button */
-.back-to-top {
-    position: fixed;
-    right: 30px;
-    bottom: 30px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-color: var(--primary);
-    color: var(--white);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    cursor: pointer;
-    z-index: 99;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-}
-
-.back-to-top.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.back-to-top:hover {
-    background-color: var(--primary-dark);
-    transform: translateY(-5px);
-}
-
-/* Accessibility */
-.skip-link {
-    position: absolute;
-    top: -50px;
-    left: 0;
-    background: var(--primary);
-    color: var(--white);
-    padding: var(--spacing-3) var(--spacing-4);
-    z-index: 9999;
-    transition: top var(--transition-fast);
-}
-
-.skip-link:focus {
-    top: 0;
-}
-
-/* Service Areas */
-.area-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: center;
-}
-
-.area-tag {
-    background-color: var(--white);
-    border: 1px solid var(--gray-light);
-    border-radius: 50px;
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.area-tag:hover {
-    background-color: var(--primary-light);
-    color: var(--white);
-    border-color: var(--primary-light);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 1200px) {
-    .trust-side {
-        gap: 1rem;
+/* Print Styles */
+@media print {
+    .header-actions,
+    .mobile-nav-trigger,
+    .hero-buttons,
+    .section-cta {
+        display: none !important;
     }
-    .side-item {
-        font-size: 0.8rem;
-    }
-}
 
-@media (max-width: 992px) {
-    .trust-side {
-        display: none;
+    body {
+        font-size: 12pt;
     }
-    .trust-core {
-        width: 100%;
-        justify-content: space-evenly;
-    }
-    .trust-bar {
-        padding: 0.75rem 1rem;
-    }
-}
 
-@media (max-width: 768px) {
-    .trust-core {
-        gap: 0.75rem;
-    }
-    .core-item {
-        padding: 0 0.5rem;
-    }
-    .core-item strong {
-        font-size: 1.25rem;
-    }
-    .core-item span {
-        font-size: 0.8rem;
-    }
-    .core-item i {
-        font-size: 1rem;
-    }
-    
-    .trust-badges {
-        flex-wrap: wrap;
-    }
-}
-
-@media (max-width: 480px) {
-    .trust-bar {
-        padding: 0.5rem;
-    }
-    .trust-core {
-        gap: 0.5rem;
-    }
-    .core-item {
-        padding: 0 0.25rem;
+    a[href]::after {
+        content: " (" attr(href) ")";
     }
 }

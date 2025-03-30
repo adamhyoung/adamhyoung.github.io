@@ -1,0 +1,171 @@
+/* Desktop Navigation */
+.desktop-nav {
+    display: none;
+    flex: 1;
+}
+
+@media (min-width: 992px) {
+    .desktop-nav {
+        display: flex;
+        justify-content: center;
+        height: 100%;
+    }
+}
+
+/* Main Menu */
+.main-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: stretch;
+    height: 100%;
+    gap: var(--spacing-1);
+}
+
+.main-menu > li {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    max-width: 180px;
+}
+
+.main-menu > li > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--spacing-4);
+    color: var(--white);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
+    letter-spacing: 0.01em;
+    position: relative;
+    text-shadow: var(--nav-text-shadow);
+    transition: all var(--transition-normal);
+    white-space: nowrap;
+    gap: var(--spacing-2);
+}
+
+/* Dropdown indicator */
+.main-menu > li > a i {
+    font-size: 0.8rem;
+    opacity: 0.8;
+    transition: all var(--transition-normal);
+}
+
+/* Enhanced Hover effect */
+.main-menu > li > a::before {
+    content: '';
+    position: absolute;
+    inset: 20% 0;
+    background: linear-gradient(180deg, 
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.15) 100%
+    );
+    opacity: 0;
+    transition: all var(--transition-normal);
+    border-radius: var(--radius-sm);
+}
+
+/* Active and Hover States */
+.main-menu > li:hover > a::before,
+.main-menu > li > a.active::before {
+    opacity: 1;
+    inset: 15% 0; /* Expand slightly */
+}
+
+.main-menu > li:hover > a i {
+    transform: rotate(180deg);
+    opacity: 1;
+}
+
+/* Dropdowns */
+.dropdown-menu,
+.megamenu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background: var(--white);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    opacity: 0;
+    visibility: hidden;
+    transition: all var(--transition-normal);
+    z-index: var(--z-dropdown);
+    border-top: 2px solid var(--primary);
+}
+
+.dropdown-menu {
+    min-width: 220px;
+    padding: var(--spacing-2);
+}
+
+.megamenu {
+    width: min(800px, 90vw);
+    padding: var(--spacing-6);
+}
+
+/* Show dropdown on hover */
+.has-dropdown:hover .dropdown-menu,
+.has-megamenu:hover .megamenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Dropdown items */
+.dropdown-menu li {
+    list-style: none;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: var(--spacing-2) var(--spacing-4);
+    color: var(--dark);
+    transition: all var(--transition-fast);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-sm);
+}
+
+.dropdown-menu a:hover {
+    background: var(--light);
+    color: var(--primary);
+    transform: translateX(var(--spacing-1));
+}
+
+/* Megamenu layout */
+.megamenu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-6);
+}
+
+.megamenu-column h3 {
+    color: var(--primary-dark);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--spacing-3);
+    padding-bottom: var(--spacing-2);
+    border-bottom: 2px solid var(--primary-light);
+}
+
+/* Scroll State Adjustments */
+.header-scrolled .main-menu > li > a {
+    font-size: calc(var(--font-size-sm) * 0.95);
+    padding: 0 var(--spacing-3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .main-menu > li > a {
+        padding: 0 var(--spacing-3);
+    }
+    
+    .megamenu {
+        width: min(700px, 95vw);
+    }
+}
