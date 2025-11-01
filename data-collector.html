@@ -1,0 +1,448 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Browser Data Collector (Client-Side)</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d10;
+      --fg: #e7e9ed;
+      --muted: #9aa4b2;
+      --card: #12161c;
+      --border: #1f2630;
+      --accent: #6ea8fe;
+      --ok: #58d39b;
+      --warn: #f2c94c;
+      --err: #ff7b7b;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0; background: var(--bg); color: var(--fg);
+      font: 14px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      display: grid; place-items: start center;
+      padding: 24px;
+    }
+    .wrap { width: min(1100px, 100%); }
+    header {
+      display: flex; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 16px;
+    }
+    h1 { font-size: 20px; margin: 0; letter-spacing: .2px; }
+    .btns { display:flex; gap:8px; flex-wrap: wrap; }
+    button {
+      background: var(--card); color: var(--fg); border: 1px solid var(--border);
+      padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: 600;
+    }
+    button:hover { border-color: var(--accent); }
+    .card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+      padding: 16px; margin-bottom: 16px;
+    }
+    .grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .kv {
+      border: 1px dashed var(--border); border-radius: 8px; padding: 10px;
+    }
+    .kv h3 { margin: 0 0 6px 0; font-size: 13px; color: var(--muted); font-weight: 600; }
+    pre {
+      background: #0a0c0f; border: 1px solid var(--border); border-radius: 10px; padding: 12px; overflow: auto;
+      font-family: var(--mono); font-size: 12px; margin: 0;
+    }
+    .small { color: var(--muted); font-size: 12px; margin-top: 6px; }
+    a { color: var(--accent); text-decoration: none; }
+    .tag { display:inline-block; padding:2px 6px; border:1px solid var(--border); border-radius: 999px; font-size:11px; color:var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Browser Data Collector <span class="tag">client-side only</span></h1>
+      <div class="btns">
+        <button id="refreshBtn">Refresh</button>
+        <button id="copyBtn">Copy JSON</button>
+        <button id="downloadBtn">Download JSON</button>
+        <button id="geoBtn" title="Request location permission">Request Geolocation</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="grid" id="cards"></div>
+    </div>
+
+    <div class="card">
+      <h3 style="margin:0 0 8px 0;color:var(--muted)">Raw JSON</h3>
+      <pre id="raw">Collecting…</pre>
+      <div class="small">Only data exposed by the browser is collected. Sensitive items (e.g., exact location, device names) require your explicit permission and may remain <code>null</code> otherwise.</div>
+    </div>
+  </div>
+
+<script>
+(async () => {
+  const $raw = document.getElementById('raw');
+  const $cards = document.getElementById('cards');
+  const $refresh = document.getElementById('refreshBtn');
+  const $copy = document.getElementById('copyBtn');
+  const $download = document.getElementById('downloadBtn');
+  const $geo = document.getElementById('geoBtn');
+
+  // Helpers
+  const safe = (fn, fallback = null) => { try { return fn(); } catch { return fallback; } };
+  const asBool = v => v === true ? true : (v === false ? false : null);
+  const toNullIfUndef = v => (v === undefined ? null : v);
+
+  async function getUAHints() {
+    const nav = navigator;
+    const uaData = nav.userAgentData;
+    if (!uaData) return null;
+    let brands = null, mobile = null, platform = null, arch = null, model = null, bitness = null, fullVersionList = null;
+    try {
+      const hi = await uaData.getHighEntropyValues?.(['architecture','bitness','model','platform','platformVersion','uaFullVersion','fullVersionList']);
+      arch = hi?.architecture ?? null;
+      bitness = hi?.bitness ?? null;
+      model = hi?.model ?? null;
+      platform = (hi?.platform ?? uaData.platform) || null;
+      fullVersionList = hi?.fullVersionList ?? null;
+    } catch {}
+    try { brands = uaData.brands || null; mobile = uaData.mobile ?? null; } catch {}
+    return { brands, mobile, platform, architecture: arch, bitness, model, fullVersionList };
+  }
+
+  function getWebGLInfo() {
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    if (!gl) return null;
+    const dbg = gl.getExtension('WEBGL_debug_renderer_info');
+    const vendor = dbg ? gl.getParameter(dbg.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR);
+    const renderer = dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+    return {
+      vendor: vendor || null,
+      renderer: renderer || null,
+      version: gl.getParameter(gl.VERSION) || null,
+      shadingLanguageVersion: gl.getParameter(gl.SHADING_LANGUAGE_VERSION) || null,
+      maxTextureSize: gl.getParameter(gl.MAX_TEXTURE_SIZE) || null,
+      antialias: gl.getContextAttributes()?.antialias ?? null
+    };
+  }
+
+  async function getBattery() {
+    try {
+      if (!('getBattery' in navigator)) return null;
+      const b = await navigator.getBattery();
+      return {
+        charging: asBool(b.charging),
+        chargingTime: toNullIfUndef(b.chargingTime),
+        dischargingTime: toNullIfUndef(b.dischargingTime),
+        level: toNullIfUndef(b.level)
+      };
+    } catch { return null; }
+  }
+
+  async function getStorage() {
+    try {
+      const est = await navigator.storage?.estimate?.();
+      return est ? { quota: est.quota ?? null, usage: est.usage ?? null } : null;
+    } catch { return null; }
+  }
+
+  function getConnection() {
+    const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (!c) return null;
+    return {
+      effectiveType: c.effectiveType ?? null,
+      downlink: c.downlink ?? null,
+      rtt: c.rtt ?? null,
+      saveData: asBool(c.saveData),
+      type: c.type ?? null
+    };
+  }
+
+  async function getPermissions() {
+    if (!navigator.permissions?.query) return null;
+    const names = ['geolocation','notifications','camera','microphone','persistent-storage','accelerometer','gyroscope','magnetometer','clipboard-read','clipboard-write','midi','background-sync','nfc'];
+    const out = {};
+    await Promise.all(names.map(async n => {
+      try { out[n] = (await navigator.permissions.query({name: n})).state; }
+      catch { out[n] = null; }
+    }));
+    return out;
+  }
+
+  async function getMediaDevices() {
+    if (!navigator.mediaDevices?.enumerateDevices) return null;
+    try {
+      const list = await navigator.mediaDevices.enumerateDevices();
+      // Labels are empty until permission is granted; we still show kind & deviceId hash
+      return list.map(d => ({
+        kind: d.kind || null,
+        label: d.label || null,
+        deviceIdHash: d.deviceId ? await digest(d.deviceId) : null,
+        groupIdHash: d.groupId ? await digest(d.groupId) : null
+      }));
+    } catch { return null; }
+  }
+
+  async function digest(text) {
+    try {
+      const enc = new TextEncoder().encode(text);
+      const buf = await crypto.subtle.digest('SHA-256', enc);
+      return [...new Uint8Array(buf)].map(b => b.toString(16).padStart(2,'0')).join('');
+    } catch { return null; }
+  }
+
+  function getPrefers() {
+    const mq = q => window.matchMedia ? window.matchMedia(q).matches : null;
+    return {
+      colorSchemeDark: asBool(mq('(prefers-color-scheme: dark)')),
+      reducedMotion: asBool(mq('(prefers-reduced-motion: reduce)')),
+      contrastMore: asBool(mq('(prefers-contrast: more)')),
+      hdr: asBool(mq('(dynamic-range: high)'))
+    };
+  }
+
+  function getCodecs() {
+    const v = document.createElement('video');
+    const a = document.createElement('audio');
+    const can = el => type => el.canPlayType ? (el.canPlayType(type) || 'no') : 'no';
+    return {
+      video: {
+        h264: can(v)('video/mp4; codecs="avc1.42E01E"'),
+        h265: can(v)('video/mp4; codecs="hvc1"'),
+        vp8:  can(v)('video/webm; codecs="vp8"'),
+        vp9:  can(v)('video/webm; codecs="vp9"'),
+        av1:  can(v)('video/mp4; codecs="av01.0.05M.08"')
+      },
+      audio: {
+        mp3:  can(a)('audio/mpeg'),
+        aac:  can(a)('audio/mp4; codecs="mp4a.40.2"'),
+        opus: can(a)('audio/ogg; codecs="opus"'),
+        flac: can(a)('audio/flac'),
+        wav:  can(a)('audio/wav')
+      }
+    };
+  }
+
+  function getPerf() {
+    try {
+      const nav = performance.getEntriesByType('navigation')[0];
+      const mem = performance.memory || null;
+      return {
+        type: nav?.type ?? null,
+        startTime: nav?.startTime ?? null,
+        domContentLoaded: nav?.domContentLoadedEventEnd ?? null,
+        loadEventEnd: nav?.loadEventEnd ?? null,
+        transferSize: nav?.transferSize ?? null,
+        encodedBodySize: nav?.encodedBodySize ?? null,
+        decodedBodySize: nav?.decodedBodySize ?? null,
+        jsHeapSizeLimit: mem?.jsHeapSizeLimit ?? null,
+        totalJSHeapSize: mem?.totalJSHeapSize ?? null,
+        usedJSHeapSize: mem?.usedJSHeapSize ?? null
+      };
+    } catch { return null; }
+  }
+
+  function getBasics() {
+    const n = navigator;
+    const d = document;
+    const intl = Intl.DateTimeFormat().resolvedOptions?.() || {};
+    const screens = {
+      width: screen.width ?? null,
+      height: screen.height ?? null,
+      availWidth: screen.availWidth ?? null,
+      availHeight: screen.availHeight ?? null,
+      colorDepth: screen.colorDepth ?? null,
+      pixelDepth: screen.pixelDepth ?? null
+    };
+    const viewport = {
+      innerWidth: window.innerWidth ?? null,
+      innerHeight: window.innerHeight ?? null,
+      devicePixelRatio: window.devicePixelRatio ?? null
+    };
+    return {
+      userAgent: n.userAgent || null,
+      platform: n.platform || null,
+      language: n.language || null,
+      languages: n.languages || null,
+      timezone: intl.timeZone || null,
+      locale: intl.locale || null,
+      cookiesEnabled: asBool(n.cookieEnabled),
+      doNotTrack: n.doNotTrack ?? null,
+      online: asBool(n.onLine),
+      referrer: d.referrer || null,
+      visibilityState: d.visibilityState || null,
+      url: location.href,
+      historyLength: history.length ?? null,
+      screen: screens,
+      viewport
+    };
+  }
+
+  function getFeatureFlags() {
+    const n = navigator;
+    return {
+      serviceWorker: !!n.serviceWorker,
+      bluetooth: !!n.bluetooth,
+      usb: !!n.usb,
+      serial: !!n.serial,
+      hid: !!n.hid,
+      clipboard: !!n.clipboard,
+      share: !!n.share,
+      webShare: !!navigator.canShare,
+      xr: !!n.xr,
+      mediaCapabilities: !!n.mediaCapabilities,
+      webRTCSupport: !!(window.RTCPeerConnection),
+      webGL: !!(document.createElement('canvas').getContext('webgl')),
+      localStorage: safe(() => { localStorage.setItem('_t','1'); localStorage.removeItem('_t'); return true; }, false),
+      sessionStorage: safe(() => { sessionStorage.setItem('_t','1'); sessionStorage.removeItem('_t'); return true; }, false),
+      indexedDB: !!window.indexedDB
+    };
+  }
+
+  async function getGeolocationOnce() {
+    if (!('geolocation' in navigator)) return null;
+    return new Promise(resolve => {
+      navigator.geolocation.getCurrentPosition(
+        pos => resolve({
+          timestamp: pos.timestamp || null,
+          coords: {
+            latitude: pos.coords.latitude ?? null,
+            longitude: pos.coords.longitude ?? null,
+            accuracy: pos.coords.accuracy ?? null,
+            altitude: pos.coords.altitude ?? null,
+            altitudeAccuracy: pos.coords.altitudeAccuracy ?? null,
+            heading: pos.coords.heading ?? null,
+            speed: pos.coords.speed ?? null
+          }
+        }),
+        _err => resolve(null),
+        { enableHighAccuracy: false, maximumAge: 0, timeout: 8000 }
+      );
+    });
+  }
+
+  async function collect() {
+    const startedAt = new Date().toISOString();
+    const [
+      uaHints, battery, storage, connection, permissions, mediaDevices,
+      geolocation
+    ] = await Promise.all([
+      getUAHints(),
+      getBattery(),
+      getStorage(),
+      Promise.resolve(getConnection()),
+      getPermissions(),
+      getMediaDevices(),
+      // Geolocation only collected if previously granted (we’ll also expose a manual request button)
+      (await navigator.permissions?.query?.({name: 'geolocation'}).then(r => r.state).catch(()=>null)) === 'granted'
+        ? getGeolocationOnce() : null
+    ]);
+
+    const data = {
+      meta: {
+        collectedAt: startedAt,
+        userInitiated: true,
+        notes: 'All data gathered client-side from standard Web APIs. Some fields may be null if unsupported or permission was denied.'
+      },
+      basics: getBasics(),
+      uaHints,
+      prefers: getPrefers(),
+      hardware: {
+        cpuThreads: navigator.hardwareConcurrency ?? null,
+        deviceMemoryGB: navigator.deviceMemory ?? null,
+        touchPoints: navigator.maxTouchPoints ?? null
+      },
+      features: getFeatureFlags(),
+      connection,
+      battery,
+      storage,
+      permissions,
+      mediaDevices,
+      codecs: getCodecs(),
+      webgl: getWebGLInfo(),
+      performance: getPerf()
+    };
+
+    return data;
+  }
+
+  function renderCards(obj) {
+    $cards.innerHTML = '';
+    const sections = [
+      ['Basics', obj.basics],
+      ['UA Hints', obj.uaHints],
+      ['Preferences', obj.prefers],
+      ['Hardware', obj.hardware],
+      ['Features', obj.features],
+      ['Network (NetInfo API)', obj.connection],
+      ['Battery', obj.battery],
+      ['Storage Estimate', obj.storage],
+      ['Permissions', obj.permissions],
+      ['Media Devices', obj.mediaDevices],
+      ['Codecs Support', obj.codecs],
+      ['WebGL', obj.webgl],
+      ['Performance', obj.performance],
+      ['Metadata', obj.meta]
+    ];
+    for (const [title, value] of sections) {
+      const div = document.createElement('div');
+      div.className = 'kv';
+      const h = document.createElement('h3');
+      h.textContent = title;
+      const pre = document.createElement('pre');
+      pre.textContent = JSON.stringify(value, null, 2);
+      div.appendChild(h);
+      div.appendChild(pre);
+      $cards.appendChild(div);
+    }
+  }
+
+  async function refresh() {
+    $raw.textContent = 'Collecting…';
+    const data = await collect();
+    $raw.textContent = JSON.stringify(data, null, 2);
+    renderCards(data);
+    window.__COLLECTED__ = data;
+  }
+
+  $refresh.addEventListener('click', refresh);
+  $copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(window.__COLLECTED__ ?? {}, null, 2));
+      $copy.textContent = 'Copied ✓';
+      setTimeout(() => ($copy.textContent = 'Copy JSON'), 1400);
+    } catch {
+      alert('Clipboard write failed. You can select and copy the JSON manually.');
+    }
+  });
+  $download.addEventListener('click', () => {
+    const blob = new Blob([JSON.stringify(window.__COLLECTED__ ?? {}, null, 2)], {type: 'application/json'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'browser-data.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(a.href);
+  });
+  $geo.addEventListener('click', async () => {
+    const pos = await getGeolocationOnce();
+    if (!pos) { alert('Geolocation unavailable or denied.'); return; }
+    window.__COLLECTED__ = window.__COLLECTED__ || {};
+    window.__COLLECTED__.geolocation = pos;
+    // Re-render with geolocation surfaced in Basics
+    const basics = window.__COLLECTED__.basics || {};
+    basics.geolocation = pos;
+    window.__COLLECTED__.basics = basics;
+    $raw.textContent = JSON.stringify(window.__COLLECTED__, null, 2);
+    renderCards(window.__COLLECTED__);
+  });
+
+  // Initial run
+  await refresh();
+})();
+</script>
+</body>
+</html>
