@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ASCII Spin Field</title>
+  <style>
+    :root{
+      --bg0:#04081a; /* deep dark blue */
+      --bg1:#020515;
+      --glow: rgba(0, 242, 255, 0.10);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: radial-gradient(1200px 800px at 50% 40%, #07123a 0%, var(--bg0) 45%, var(--bg1) 100%);
+      overflow: hidden;
+    }
+
+    #wrap {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(900px 600px at 50% 45%, rgba(0, 255, 230, 0.06), transparent 65%),
+        radial-gradient(1200px 900px at 45% 55%, rgba(0, 180, 255, 0.05), transparent 70%);
+    }
+
+    /* pre holds a single giant text node (fast) */
+    pre {
+      margin: 0;
+      user-select: none;
+      font-family: var(--mono);
+      line-height: 1;
+      letter-spacing: 0;
+      white-space: pre;
+      will-change: contents;
+      filter:
+        drop-shadow(0 0 10px var(--glow))
+        drop-shadow(0 0 22px rgba(0, 220, 255, 0.08));
+    }
+
+    /* Subtle vignette + scanline vibe, optional but nice */
+    #fx {
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(1200px 900px at 50% 50%, transparent 0%, rgba(0,0,0,0.25) 55%, rgba(0,0,0,0.45) 100%),
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,0.015) 0px,
+          rgba(255,255,255,0.015) 1px,
+          rgba(0,0,0,0.00) 2px,
+          rgba(0,0,0,0.00) 4px
+        );
+      mix-blend-mode: overlay;
+      opacity: 0.55;
+    }
+
+    /* Help text */
+    #hint{
+      position: fixed;
+      left: 18px;
+      bottom: 14px;
+      color: rgba(170, 220, 255, 0.55);
+      font: 12px/1.2 var(--mono);
+      letter-spacing: 0.2px;
+      text-shadow: 0 0 12px rgba(0, 240, 255, 0.12);
+      user-select: none;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrap">
+    <pre id="ascii" aria-label="ASCII visualization"></pre>
+  </div>
+  <div id="fx"></div>
+  <div id="hint">Move mouse to “spin” nearby glyphs • Wheel/trackpad zooms intensity</div>
+
+  <script>
+    (() => {
+      const pre = document.getElementById('ascii');
+
+      // Character palette (base field uses these).
+      const basePalette = " .,:;i1tfLCG08@";
+      // Spin palette (rotors) - looks like motion when rotated.
+      const rotor = ["|", "/", "—", "\\"]; // em dash looks smoother than hyphen
+
+      // Sizing: compute grid that fits viewport exactly in monospace cells.
+      // We'll measure a hidden span to get a robust cell size.
+      const measure = (() => {
+        const span = document.createElement('span');
+        span.textContent = "M";
+        span.style.cssText = `
+          position: fixed; left: -9999px; top: -9999px;
+          font-family: ${getComputedStyle(document.documentElement).getPropertyValue('--mono') || 'monospace'};
+          font-size: 14px; line-height: 1; white-space: pre;
+        `;
+        document.body.appendChild(span);
+        const rect = span.getBoundingClientRect();
+        span.remove();
+        return { w: rect.width, h: rect.height };
+      })();
+
+      let cellW = measure.w, cellH = measure.h;
+
+      // We'll adapt font size to viewport so the grid feels dense but readable.
+      // Then we re-measure.
+      function chooseFontSize() {
+        const area = innerWidth * innerHeight;
+        // Heuristic: bigger screens get slightly larger monospace.
+        let fs = 12;
+        if (area > 1.6e6) fs = 13;
+        if (area > 2.4e6) fs = 14;
+        if (area > 3.2e6) fs = 15;
+        if (area > 4.2e6) fs = 16;
+        pre.style.fontSize = fs + "px";
+
+        // Re-measure with chosen font size
+        const span = document.createElement('span');
+        span.textContent = "M";
+        span.style.cssText = `
+          position: fixed; left: -9999px; top: -9999px;
+          font-family: ${getComputedStyle(pre).fontFamily};
+          font-size: ${fs}px; line-height: 1; white-space: pre;
+        `;
+        document.body.appendChild(span);
+        const rect = span.getBoundingClientRect();
+        span.remove();
+        cellW = rect.width;
+        cellH = rect.height;
+      }
+
+      // Grid state
+      let cols = 0, rows = 0, N = 0;
+      let baseChar = null;      // Uint16 indices into palette (or rotor marker)
+      let phase = null;         // Float32 phase per cell
+      let spin = null;          // Float32 spin velocity accumulator
+      let tmpChars = null;      // Uint16 temp indices for render
+      let mouseX = -1, mouseY = -1;
+      let prevMouseX = -1, prevMouseY = -1;
+      let intensity = 1.0;      // wheel controls
+      let lastT = performance.now();
+
+      // Helpers
+      const clamp = (v, a, b) => (v < a ? a : v > b ? b : v);
+      const fract = (x) => x - Math.floor(x);
+
+      // Smooth noise-ish function (cheap)
+      function hash2(x, y) {
+        // deterministic pseudo-random [0..1)
+        const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453123;
+        return fract(s);
+      }
+      function smoothstep(a, b, x){
+        x = clamp((x - a) / (b - a), 0, 1);
+        return x * x * (3 - 2 * x);
+      }
+
+      // Foreground gradient color per cell (deep saturated blue->teal)
+      function colorAt(ix, iy, t){
+        const u = ix / Math.max(1, cols - 1);
+        const v = iy / Math.max(1, rows - 1);
+
+        // Base gradient: teal near center/top-right; deep blue elsewhere.
+        const cx = 0.55, cy = 0.45;
+        const dx = u - cx, dy = v - cy;
+        const r = Math.sqrt(dx*dx + dy*dy);
+
+        // Mix factor with a subtle temporal shimmer
+        const k = clamp(1.0 - r * 1.35, 0, 1);
+        const shimmer = 0.08 * Math.sin(t*0.001 + u*7.0 + v*5.0);
+        const mix = clamp(k + shimmer, 0, 1);
+
+        // Two HSL-ish endpoints (hand-tuned)
+        // A: deep blue, B: teal/cyan
+        const A = { r: 20,  g: 60,  b: 190 };
+        const B = { r: 0,   g: 230, b: 210 };
+
+        const rr = (A.r + (B.r - A.r) * mix) | 0;
+        const gg = (A.g + (B.g - A.g) * mix) | 0;
+        const bb = (A.b + (B.b - A.b) * mix) | 0;
+
+        // Slight gamma-ish boost for saturation on dark
+        return `rgb(${rr},${gg},${bb})`;
+      }
+
+      function resize() {
+        chooseFontSize();
+        cols = Math.max(20, Math.floor(innerWidth / cellW));
+        rows = Math.max(10, Math.floor(innerHeight / cellH));
+        N = cols * rows;
+
+        baseChar = new Uint16Array(N);
+        tmpChars  = new Uint16Array(N);
+        phase = new Float32Array(N);
+        spin  = new Float32Array(N);
+
+        // Initialize field: density based on radial + noise for texture
+        const now = performance.now();
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            const i = y * cols + x;
+
+            const u = x / Math.max(1, cols - 1);
+            const v = y / Math.max(1, rows - 1);
+
+            const dx = u - 0.52, dy = v - 0.48;
+            const r = Math.sqrt(dx*dx + dy*dy);
+
+            const n = hash2(x*0.7, y*0.7);
+            const band = 0.5 + 0.5*Math.sin((u*8.0 + v*6.0 + n*2.5) * Math.PI);
+
+            // Brightness proxy for picking characters
+            let lum = 0.9 * (1.0 - r) + 0.35 * band + 0.25 * n;
+            lum = clamp(lum, 0, 1);
+
+            const idx = Math.floor(lum * (basePalette.length - 1));
+            baseChar[i] = idx;
+
+            // Phase seeded
+            phase[i] = (n * Math.PI * 2) + (r * 3.0);
+          }
+        }
+
+        pre.textContent = buildHTMLString(now);
+      }
+
+      // We render as HTML so each cell can be colored with a gradient foreground.
+      // Still a "monolith": one HTML file, no deps.
+      function buildHTMLString(t) {
+        // A single string, row by row. Use spans per character.
+        // This is heavier than plain text, but still OK at moderate grid sizes.
+        // We keep it efficient via string builder arrays.
+        const out = [];
+        out.length = 0;
+
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            const i = y * cols + x;
+
+            // Decide whether this cell is spinning (rotor) or base palette
+            const sp = spin[i];
+            let ch;
+            if (Math.abs(sp) > 0.02) {
+              // rotor selection from phase direction
+              const k = ((phase[i] / (Math.PI*2)) * rotor.length) | 0;
+              ch = rotor[((k % rotor.length) + rotor.length) % rotor.length];
+            } else {
+              ch = basePalette[baseChar[i]];
+            }
+
+            // Per-cell color (blue/teal gradient)
+            const col = colorAt(x, y, t);
+
+            out.push(`<span style="color:${col}">${escapeHTML(ch)}</span>`);
+          }
+          out.push("\n");
+        }
+        return out.join("");
+      }
+
+      function escapeHTML(s){
+        // Only a few special cases matter for single-char spans.
+        if (s === "&") return "&amp;";
+        if (s === "<") return "&lt;";
+        if (s === ">") return "&gt;";
+        if (s === '"') return "&quot;";
+        return s;
+      }
+
+      // Mouse interaction: apply torque-like impulse around cursor,
+      // with sign determined by mouse movement direction.
+      function onMove(e) {
+        const rect = pre.getBoundingClientRect();
+        mouseX = e.clientX - rect.left;
+        mouseY = e.clientY - rect.top;
+
+        if (prevMouseX < 0) { prevMouseX = mouseX; prevMouseY = mouseY; }
+
+        const dx = mouseX - prevMouseX;
+        const dy = mouseY - prevMouseY;
+        prevMouseX = mouseX;
+        prevMouseY = mouseY;
+
+        // Mouse velocity
+        const v = Math.hypot(dx, dy);
+        if (v < 0.2) return;
+
+        // Convert to grid coords
+        const gx = mouseX / cellW;
+        const gy = mouseY / cellH;
+
+        // Influence radius in cells (scaled by intensity and speed)
+        const R = clamp(6 + v * 0.12 * intensity, 6, 20);
+        const R2 = R * R;
+
+        // Direction sign: compute "swirl" sign using cross product with radial vector.
+        // We'll do per-cell torque = sign( (mouseVel) x (cellVec) )
+        const mvx = dx / v, mvy = dy / v;
+
+        const x0 = Math.floor(gx - R), x1 = Math.ceil(gx + R);
+        const y0 = Math.floor(gy - R), y1 = Math.ceil(gy + R);
+
+        for (let y = y0; y <= y1; y++) {
+          if (y < 0 || y >= rows) continue;
+          for (let x = x0; x <= x1; x++) {
+            if (x < 0 || x >= cols) continue;
+
+            const cx = x + 0.5;
+            const cy = y + 0.5;
+            const vxCell = cx - gx;
+            const vyCell = cy - gy;
+            const d2 = vxCell*vxCell + vyCell*vyCell;
+            if (d2 > R2) continue;
+
+            // cross2D(mv, cellVec) = mvx*vy - mvy*vx
+            const cross = mvx * vyCell - mvy * vxCell;
+
+            // Falloff: stronger near center, smoother at edges
+            const fall = 1.0 - smoothstep(0.0, R2, d2);
+
+            // Impulse magnitude scales with speed
+            const imp = cross * fall * (0.55 + v * 0.02) * intensity;
+
+            const i = y * cols + x;
+            spin[i] += imp;
+          }
+        }
+      }
+
+      // Wheel adjusts intensity
+      function onWheel(e){
+        intensity *= (e.deltaY < 0) ? 1.08 : 0.92;
+        intensity = clamp(intensity, 0.4, 4.0);
+      }
+
+      // Animation loop: decay spin, advance phase, render.
+      function tick(t) {
+        const dt = Math.min(32, t - lastT);
+        lastT = t;
+
+        // Update phases and decay spin
+        // Keep this tight; it runs every frame.
+        const decay = Math.exp(-dt * 0.012);  // friction
+        const adv   = dt * 0.006;             // base phase advance
+
+        for (let i = 0; i < N; i++) {
+          const s = spin[i];
+          // phase advances with spin too (so it "spins" faster)
+          phase[i] += adv + s * (dt * 0.035);
+          spin[i] = s * decay;
+
+          // clamp runaway
+          if (spin[i] >  3) spin[i] =  3;
+          if (spin[i] < -3) spin[i] = -3;
+        }
+
+        // Render
+        pre.innerHTML = buildHTMLString(t);
+        requestAnimationFrame(tick);
+      }
+
+      // Init
+      resize();
+      addEventListener('resize', resize, { passive: true });
+      addEventListener('mousemove', onMove, { passive: true });
+      addEventListener('wheel', onWheel, { passive: true });
+
+      requestAnimationFrame(tick);
+    })();
+  </script>
+</body>
+</html>
