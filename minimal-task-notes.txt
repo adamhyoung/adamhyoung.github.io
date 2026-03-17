@@ -1,0 +1,293 @@
+Minimal Task Symbol System
+
+A tiny note system for to-dos and mental offloading.
+
+Purpose
+
+Use the fewest possible marks to answer two questions:
+
+1. What kind of attention does this item need?
+
+
+2. What happened when I touched it?
+
+
+
+Write only enough to recognize the item later.
+
+
+---
+
+Format
+
+item [action] [outcome]
+
+Examples:
+
+lease ?
+
+Maya ▶
+
+passport ^
+
+refund ? x
+
+invoice ▶ ~
+
+lease ? →
+
+Maya ▶ □
+
+
+
+---
+
+1) Action symbols
+
+These tell you what kind of attention the item needs.
+
+Symbol	Meaning
+
+none	do
+?	review / decide / figure out
+▶	contact / ask / tell
+^	later / revisit / not now
+!	important
+
+
+Examples
+
+rent = do something about rent
+
+lease ? = review lease
+
+Maya ▶ = contact Maya
+
+passport ^ = deal with later
+
+taxes ! = important
+
+
+
+---
+
+2) Outcome symbols
+
+These tell you what happened after you touched the item.
+
+Symbol	Meaning
+
+→	continues / next step exists
+□	done / closed
+x	issue / blocked / problem
+~	waiting / pending
+
+
+Examples
+
+lease ? → = reviewed it, still active
+
+Maya ▶ □ = contacted, done
+
+refund ? x = problem found
+
+invoice ▶ ~ = waiting on reply
+
+
+
+---
+
+Core rules
+
+1. Item first
+
+Write the item first, then symbols.
+
+lease ?
+
+Maya ▶
+
+
+2. Keep the item short
+
+Use 1 to 3 words.
+
+lease
+
+refund form
+
+Maya invoice
+
+
+Do not write full sentences.
+
+3. No symbol means “do”
+
+This is the default.
+
+groceries
+
+laundry
+
+charger
+
+
+4. Outcome is optional
+
+Only add it after you interact with the item.
+
+lease ?
+
+later: lease ? →
+
+
+5. One action, one outcome
+
+Do not stack lots of symbols.
+
+Good:
+
+refund ? x
+
+
+Avoid:
+
+refund !?^x~
+
+
+
+---
+
+Meaning split
+
+Keep these distinct:
+
+^ = not now
+
+→ = I touched it, and it continues
+
+
+Example:
+
+passport ^ = do later
+
+passport ? → = reviewed, next step exists
+
+
+
+---
+
+Recommended starter set
+
+Action
+
+none = do
+
+? = review
+
+▶ = contact
+
+^ = later
+
+! = important
+
+
+Outcome
+
+→ = continues
+
+□ = done
+
+x = issue
+
+~ = waiting
+
+
+
+---
+
+Fast examples
+
+Plain tasks
+
+rent
+
+groceries
+
+email draft
+
+
+Review / decide
+
+lease ?
+
+budget ?
+
+
+Contact
+
+Maya ▶
+
+clinic ▶
+
+
+Later
+
+passport ^
+
+summer tires ^
+
+
+Important
+
+taxes !
+
+meds !
+
+
+With outcomes
+
+lease ? →
+
+Maya ▶ □
+
+refund ? x
+
+invoice ▶ ~
+
+
+
+---
+
+What this system is for
+
+This system is for:
+
+getting items out of your head
+
+reducing writing
+
+reducing fake-detail note taking
+
+giving yourself quick visual cues
+
+
+This system is not for full records or detailed planning.
+
+
+---
+
+One-line legend
+
+none=do  ?=review  ▶=contact  ^=later  !=important  →=continues  □=done  x=issue  ~=waiting
+
+
+---
+
+Best practice
+
+Start with only these marks:
+
+?  ▶  ^  →  □  x  ~
+
+Cut anything you do not actually use.
